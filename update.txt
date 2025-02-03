@@ -1,2 +1,7 @@
+2-3-2025
+	Updated data for dashbard api
+	We update the design for our dashboard 
+	We check in dashboard api Member count,Day today,expired member,active member, total member
+
 2-1-2025
     We make django gym system with api provider of Flask and database as Mongo db
