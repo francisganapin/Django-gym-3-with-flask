@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+
+
+<style>
+
+
+  
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.dashboard-card {
+    background: linear-gradient(135deg, #f9f9f9, #e3e3e3);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 300px;
+    max-height: 170px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-card p {
+    word-wrap: break-word;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+}
+
+.dashboard-card .icon {
+    font-size: 35px;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.dashboard-card .amount {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #222;
+}
+
+.dashboard-card .label {
+    font-size: 16px;
+    color: #555;
+    font-weight: 500;
+}
+
+.percentage {
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.green {
+    color: #28a745;
+}
+
+.red {
+    color: #dc3545;
+}
+
+
+</style>
+
+<div class="dashboard-container">
+    <div class="dashboard-card">
+        <div class="icon">👤</div>
+        <p>Active Members</p>
+        <p class="amount">{{ response.active_member_count }}</p>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="icon">📋</div>
+        <p>Total Members</p>
+        <p class="amount">{{ response.data_member }}</p>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="icon">🔄</div>
+        <p>Renewed Members</p>
+        <p class="amount">{{ response.data_renewed_member }}</p>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="icon">📅</div>
+        <p>Date Today</p>
+        <p class="amount">{{ response.date_now }}</p>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="icon">⚠️</div>
+        <p>Expired Members</p>
+        <p class="amount">{{ response.expired_member_count }}</p>
+    </div>
+</div>
+
+
+
+{% endblock %}

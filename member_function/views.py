@@ -5,8 +5,8 @@ import logging
 # Create your views here.
 # Create your views here.
 def member_list_view(request):
-    api_url_member = 'http://127.0.0.1:5000/api/members/2'
-
+    api_url_member = 'http://127.0.0.1:5000/api/members/list'
+    response = ''
 
 
     try:

@@ -3,7 +3,41 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-        
+
+
+<style>
+
+#table-wrapper {
+  position:relative;
+}
+#table-scroll {
+  height:600px;
+  overflow:auto;  
+  margin-top:20px;
+}
+#table-wrapper table {
+  width:100%;
+
+}
+#table-wrapper table * {
+  background:white;
+  color:black;
+}
+#table-wrapper table thead th .text {
+  position:absolute;   
+  top:-20px;
+  z-index:2;
+  height:200px;
+  width:35%;
+  border:1px solid red;
+}
+
+
+
+</style>
+
+
+
         <!-- Main Content -->
         <div class="content">
             <div class="header">
@@ -28,7 +62,8 @@
             </div>
 
            <!-- Table -->
-
+<div id="table-wrapper">
+<div id="table-scroll">
 <div class="table-container">
     <table id="memberTable">
         <thead>
@@ -68,11 +103,10 @@
         </tbody>
     </table>
 
-        <!-- Pagination controls -->
-       <!-- Pagination controls -->
-
-
     </div>
+    </div>
+    </div>
+
 
 
 <!--- filter renewed and gender in current  page-->
@@ -124,6 +158,8 @@
       }
     }
 </script>
+
+
     
 
     {% endblock %}
