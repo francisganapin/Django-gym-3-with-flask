@@ -3,5 +3,5 @@ from django.urls import path, include
 from . import views  # Adjust this to import your views correctly
 
 urlpatterns = [
-    path('member-list/', views.member_list_view, name='member_list_view'),
+    path('', views.dashboard_views, name='dashboard_views'),
 ]

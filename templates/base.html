@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; }
+        .container { display: flex; height: 100vh; }
+        .sidebar { width: 250px; background: #1e3a8a; color: white; padding: 20px; }
+        .sidebar h2 { font-size: 20px; margin-bottom: 20px; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar ul li { padding: 10px 0; cursor: pointer; }
+        .sidebar ul li:hover { background: #3b82f6; }
+        .content { flex: 1; padding: 20px; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .filters { display: flex; gap: 10px; margin-bottom: 20px; }
+        .filters input, .filters select, .filters button { padding: 8px; border: 1px solid #ccc; border-radius: 5px; }
+        .table-container { background: white; padding: 15px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background: #e5e7eb; }
+        .checkbox { width: 20px; }
+    </style>
+</head>
+
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>ADMINITORY</h2>
+            <ul>
+                <li>Dashboard</li>
+                <li><a href="{% url 'member_list_view' %}">Member list</a></li>
+
+                <li>Customers</li>
+                <li><strong>Orders</strong></li>
+                <li>Shipping</li>
+                <li>Product</li>
+            </ul>
+        </aside>
+        {% block content  %}
+
+        {% endblock %}
+</body>
+</html>

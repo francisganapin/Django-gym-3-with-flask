@@ -1,19 +1,21 @@
 from flask import Flask,jsonify,Response 
 import json
+from pymongo_server import ConnectionMongoDB
 
 
 app = Flask(__name__)
 
-# Load the JSON data
-input_file = "member.json"
-with open(input_file, encoding="utf-8") as json_file:
-    parsed_json = json.load(json_file)
+
+db_connection = ConnectionMongoDB()
+member_collection = db_connection.get_collection('member_list')
+
+
 
 
 @app.route('/api/members/2',methods=['GET'])
 def show_member():
-    user= parsed_json
-    return jsonify(user)
+    user = list(member_collection.find({},{'_id':0}))
+    return jsonify(user),200
 
 
 

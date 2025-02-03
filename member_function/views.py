@@ -1,24 +1,27 @@
 from django.shortcuts import render
 import requests
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.core.paginator import Paginator
+import logging
 # Create your views here.
 # Create your views here.
 def member_list_view(request):
-    response = requests.get('http://127.0.0.1:5000/api/members/2')
+    api_url_member = 'http://127.0.0.1:5000/api/members/2'
 
-    if response.status_code == 200:
-        posts = response.json()
-    else:
-        posts = []
 
-    paginator = Paginator(posts,10)  # Show 10 users per page
 
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    try:
+        response = requests.get(api_url_member,timeout=5)
+        response.raise_for_status()
+        posts = response.json() if isinstance(response.json(),list) else []
+    except:
+        print(f"sorry your api provider was not working this time")
+        return render(request,'error.html')
+
     context = {
-        'page_obj':page_obj
+        'member_list':posts
     }
-    return render(request, 'member_list.html', context)
+    return render(request, 'member/member_list.html', context)
+
+
 
 
