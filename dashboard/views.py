@@ -11,6 +11,8 @@ def dashboard_views(request):
         response.raise_for_status()
         response_data = response.json()  # Assuming the response is in JSON format
         print(response_data)
+
+        
     except requests.exceptions.RequestException as e:
         print(e)
         return render(request, 'error.html')

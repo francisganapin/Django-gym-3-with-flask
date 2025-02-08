@@ -1,3 +1,6 @@
+2-8-2025
+	update data pagination in member list
+
 2-3-2025
 	Updated data for dashbard api
 	We update the design for our dashboard 

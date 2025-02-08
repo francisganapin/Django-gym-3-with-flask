@@ -32,34 +32,31 @@
   border:1px solid red;
 }
 
-
-
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>
 
+<!-- Main Content -->
+<div class="content">
+  <div class="header">
+    <h1>Orders</h1>
+    <button style="background: #2563eb; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Create New</button>
+  </div>
 
-
-        <!-- Main Content -->
-        <div class="content">
-            <div class="header">
-                <h1>Orders</h1>
-                <button style="background: #2563eb; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Create New</button>
-            </div>
-
-            <!-- Filters -->
-            <div class="filters">
-                <input type="text" id="myInput" placeholder="Search Card" onkeyup="myFunction()">
-                <select id="genderFilter">
-                    <option>All</option>
-                    <option>Female</option>
-                    <option>Male</option>
-                </select>
-                <select id="renewedFilter">
-                    <option>All</option>
-                    <option>True</option>
-                    <option>False</option>
-                </select>
-                <button onclick="filterResults()">Search</button>
-            </div>
+  <!-- Filters -->
+  <div class="filters">
+    <form method="get" action="{% url 'member_list_view' %}" class="mb-4 flex justify-center space-x-2">
+      <input type="text" name="id_card" value="{{ request.GET.id_card }}" placeholder="Search Card">
+      <select name="gender" value="{{ request.GET.gender }}">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+  </div>
 
            <!-- Table -->
 <div id="table-wrapper">
@@ -108,58 +105,25 @@
     </div>
 
 
-
-<!--- filter renewed and gender in current  page-->
-<script>
-    function filterResults(){
-        let genderFilter = document.getElementById('genderFilter').value;
-        let renewedFilter = document.getElementById('renewedFilter').value;
-
-
-
-        let rows = document.querySelectorAll('#tableBody tr');
-
-        rows.forEach(row =>{
-            let gender = row.getAttribute('data-gender');
-            let renewed = row.getAttribute('data-renewed');
-
-        let genderMatch = (genderFilter === "All" || genderFilter === '' || gender === genderFilter);
-        let renewedMatch = (renewedFilter === "All" || renewedFilter === '' || renewed === renewedFilter);
-
-        if (genderMatch && renewedMatch){
-            row.style.display = "";
-        }else{
-            row.style.display = 'None';
-        }
-
-
-        })
-    }
-</script>
-
-
-<script>
-    function myFunction() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("myInput");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("memberTable");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }       
-      }
-    }
-</script>
-
-
     
+<div class="pagination">
+  <span class="step-links">
+      {% if member_list.has_previous %}
+          <a href="?page=1&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">&laquo; first</a>
+          <a href="?page={{ member_list.previous_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">previous</a> <!-- it will show the request data we find-->
+      {% endif %}
+
+      <span class="current">
+          Page {{ member_list.number }} of {{ member_list.paginator.num_pages }}.
+      </span>
+
+      {% if member_list.has_next %}
+          <a href="?page={{ member_list.next_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">next</a>
+          <a href="?page={{ member_list.paginator.num_pages }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">last &raquo;</a>
+      {% endif %}
+  </span>
+</div>
+
+
 
     {% endblock %}
