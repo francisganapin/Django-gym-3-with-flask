@@ -1,3 +1,6 @@
+2-9-2025
+	update registartion and path of image
+
 2-8-2025
 	update data pagination in member list
 
