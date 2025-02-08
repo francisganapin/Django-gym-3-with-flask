@@ -23,7 +23,7 @@ def dashbard():
     date_now = datetime.now().strftime("%Y-%m-%d") # date now 
 
     data_member_expiry = list(member_collection.find({}, {'expiry': 1, '_id': 0}))
-    expired_member = [member['expiry']  <= date_now for member in data_member_expiry] # list the expired data  base on date
+    expired_member = [member['expiry']  <= date_now for member in data_member_expiry if member['expiry'] is not None] # list the expired data  base on date
     count_expired  = expired_member.count(1) # this will count true
     count_active   = expired_member.count(0) # this will count false
 

@@ -48,6 +48,8 @@ class MemberClass:
             filename = fs.save(myfile.name,myfile)
             print(filename)
 
+        
+
 def member_list_view(request):
 
     api_url_member = 'http://127.0.0.1:5000/api/members/list'
@@ -98,7 +100,6 @@ def member_register_view(request):
         gender = request.POST.get('gender')
         address = request.POST.get('address')
         phone_number = request.POST.get('phone_number')
-        profile_image = request.FILES.get('profile_image')
         join_date = MemberClass.formatted_date
         renewed = True
 
@@ -127,3 +128,18 @@ def member_register_view(request):
                 
 
     return render(request, 'member/member_register.html')
+
+def member_update_views(request):
+     
+    if request.method == 'POST':
+        id_card = request.POST.get('id_card')
+        expiry = request.POST.get('expiry')
+
+        queary = { "id_card": { "$regex": id_card } }
+        insert = { "$set":{'expiry':expiry}}
+    try:
+        MemberClass.collection.update_one(queary,insert)
+    except:
+         print('data was not updated')
+    
+    return render (request,'member/member_update.html')

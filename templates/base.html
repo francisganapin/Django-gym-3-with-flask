@@ -22,6 +22,31 @@
         th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
         th { background: #e5e7eb; }
         .checkbox { width: 20px; }
+
+        .sidebar a, .dropdown-btn {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            background: none;
+            border: none;
+            outline: none;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+        }
+        .sidebar a:hover, .dropdown-btn:hover {
+            background-color: #575757;
+        }
+        .dropdown-container {
+            display: none;
+            background-color: #262626;
+            padding-left: 15px;
+        }
+        .dropdown-btn.active {
+            background-color: #575757;
+        }
     </style>
 </head>
 
@@ -33,7 +58,16 @@
             <h2>Gym Gimik</h2>
             <ul>
                 <li><a href="{% url 'dashboard_views' %}">Dashboard</a></li>
-                <li><a href="{% url 'member_list_view' %}">Member list</a></li>
+             
+
+                <button class="dropdown-btn">Member
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-container">
+                    <a href="{% url 'member_list_view' %}">Member list</a>
+                    <a href="{% url 'member_register_view' %}">Register</a>
+                    <a href="{% url 'member_update_views' %}">Update</a>
+                </div>
 
                 <li>Customers</li>
                 <li><strong>Orders</strong></li>
@@ -46,3 +80,20 @@
         {% endblock %}
 </body>
 </html>
+
+
+<script>
+    var dropdowns = document.getElementsByClassName("dropdown-btn");
+
+    for (var i = 0; i < dropdowns.length; i++) {
+        dropdowns[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block" || dropdownContent.style.display === "") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>

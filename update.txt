@@ -1,5 +1,7 @@
 2-9-2025
 	update registartion and path of image
+	update expiry number for user
+	update navbar 
 
 2-8-2025
 	update data pagination in member list
