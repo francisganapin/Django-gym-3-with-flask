@@ -9,6 +9,7 @@ from datetime import datetime
 import pymongo
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.files.storage import FileSystemStorage
 
 class MemberClass:
 
@@ -37,7 +38,15 @@ class MemberClass:
 
                 # Ensure unique ID card
     collection.create_index([('id_card', pymongo.ASCENDING)], unique=True)
-    
+
+    # this code is for profile image request it will save on our destination
+    def upload(request):
+        folder = 'media/image'
+        if request.method == 'POST' and request.FILES['profile_image']:
+            myfile = request.FILES['profile_image']
+            fs = FileSystemStorage(location=folder)
+            filename = fs.save(myfile.name,myfile)
+            print(filename)
 
 def member_list_view(request):
 
@@ -92,6 +101,8 @@ def member_register_view(request):
         profile_image = request.FILES.get('profile_image')
         join_date = MemberClass.formatted_date
         renewed = True
+
+        profile_image_path = MemberClass.upload(request)
         data = {
             'id_card':id_card,
             'expiry':expiry,
@@ -100,7 +111,7 @@ def member_register_view(request):
             'gender':gender,
             'address':address,
             'phone_number':phone_number,
-            'profile_image':profile_image,
+            'profile_image':profile_image_path,
             'join_date':join_date,
             'renewed':renewed
         }
