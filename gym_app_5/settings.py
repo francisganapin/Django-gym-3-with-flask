@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'member_function',
-    'dashboard'
+    'dashboard',
+    'csv_export', # export our data
 
 ]
 

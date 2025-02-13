@@ -58,6 +58,7 @@ def member_list_view(request):
     try:
         response = requests.get(api_url_member,timeout=5)
         response.raise_for_status()
+    
         posts = response.json() if isinstance(response.json(),list) else []
 
         queary_card = request.GET.get('id_card')
@@ -89,6 +90,10 @@ def member_list_view(request):
     return render(request, 'member/member_list.html', context)
 
 
+
+
+
+   
 
 def member_register_view(request):
 
@@ -143,3 +148,42 @@ def member_update_views(request):
          print('data was not updated')
     
     return render (request,'member/member_update.html')
+
+
+
+import csv
+from django.http import HttpResponse
+
+
+def some_view(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+
+    api_url_member = 'http://127.0.0.1:5000/api/members/list'
+    response = ''
+
+    response = requests.get(api_url_member)
+    data = response.json()
+    
+
+    response = HttpResponse(
+        content_type="text/csv",
+        headers={"Content-Disposition": 'attachment; filename="somefilename.csv"'},
+    )
+
+    writer = csv.writer(response)
+    writer.writerow(["id_card", "expiry", "first_name", "last_name","gender","phone_number","profile_image","join_date","renewed"])
+    for member in data:
+        writer.writerow([
+            member['id_card'],
+            member['expiry'],
+            member['first_name'],
+            member['last_name'],
+            member['gender'],
+            member['phone_number'],
+            member['profile_image'],
+            member['join_date'],
+            member['renewed']
+        ])
+    
+
+    return response
