@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 db_connection = ConnectionMongoDB()
 member_collection = db_connection.get_collection('member_list')
+class_collection = db_connection.get_collection('class_list')
 
 
 @app.route('/api/dashboard/',methods=['GET'])
@@ -47,6 +48,11 @@ def dashbard():
 def show_member():
     user = list(member_collection.find({},{'_id':0}))
     return jsonify(user),200
+
+@app.route('/api/class/list',methods=['GET'])
+def show_classes():
+    class_list = list(class_collection.find({},{'_id':0}))
+    return jsonify(class_list),200
 
 
 

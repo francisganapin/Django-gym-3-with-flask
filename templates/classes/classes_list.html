@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+
+<style>
+  #table-wrapper {
+    position: relative;
+  }
+  #table-scroll {
+    height: 600px;
+    overflow: auto;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  #table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background: #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .filters input, .filters select, .filters button {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+</style>
+
+<!-- Main Content -->
+<div class="content">
+  <div class="header">
+    <h1>Member List</h1>
+  </div>
+
+
+  <!-- Table -->
+  <div id="table-wrapper">
+    <div id="table-scroll">
+      <div class="table-container">
+        <table id="memberTable">
+          <thead>
+            <tr>
+                <th>Class Name</th>
+                <th>Class ID</th>
+                <th>Duration</th>
+                <th>Schedule</th>
+                <th>Trainor Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in classes_data %}
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.class_id_card}}</td>
+                <td>{{item.duration}}</td>
+                <td>{{item.schedule}}</td>
+                <td>{{item.instructor}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+    {% endblock %}

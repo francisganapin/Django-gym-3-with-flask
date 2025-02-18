@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Yoga for Beginners",
+    "class_id_card": "mon-yo-60-1",
+    "instructor": "Jane Doe",
+    "duration": "60 minutes",
+    "schedule": "Monday, Wednesday, Friday - 7:00 AM"
+  },
+  {
+    "name": "HIIT Workout",
+    "class_id_card": "tues-hit-60-2",
+    "instructor": "John Smith",
+    "duration": "45 minutes",
+    "schedule": "Tuesday, Thursday - 6:00 PM"
+  },
+  {
+    "name": "Pilates",
+    "class_id_card": "wen-pil-60-3",
+    "instructor": "Sarah Lee",
+    "duration": "60 minutes",
+    "schedule": "Monday, Wednesday - 8:00 AM"
+  },
+  {
+    "name": "Spinning Class",
+    "class_id_card": "thu-spin-50-4",
+    "instructor": "Mike Johnson",
+    "duration": "50 minutes",
+    "schedule": "Tuesday, Thursday - 5:00 PM"
+  },
+  {
+    "name": "Zumba",
+    "class_id_card": "fri-zum-60-5",
+    "instructor": "Emily Davis",
+    "duration": "60 minutes",
+    "schedule": "Friday - 6:30 PM"
+  },
+  {
+    "name": "Strength Training",
+    "class_id_card": "sat-str-60-6",
+    "instructor": "Alex Martinez",
+    "duration": "60 minutes",
+    "schedule": "Wednesday, Friday - 7:30 PM"
+  },
+  {
+    "name": "CrossFit",
+    "class_id_card": "san-fit-60-7",
+    "instructor": "Chris Brown",
+    "duration": "60 minutes",
+    "schedule": "Monday, Saturday - 10:00 AM"
+  }
+]

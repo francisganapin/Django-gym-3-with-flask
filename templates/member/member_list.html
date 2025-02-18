@@ -6,128 +6,129 @@
 
 
 <style>
-
-#table-wrapper {
-  position:relative;
-}
-#table-scroll {
-  height:600px;
-  overflow:auto;  
-  margin-top:20px;
-}
-#table-wrapper table {
-  width:100%;
-
-}
-#table-wrapper table * {
-  background:white;
-  color:black;
-}
-#table-wrapper table thead th .text {
-  position:absolute;   
-  top:-20px;
-  z-index:2;
-  height:200px;
-  width:35%;
-  border:1px solid red;
-}
-
-.filters {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  #table-wrapper {
+    position: relative;
+  }
+  #table-scroll {
+    height: 600px;
+    overflow: auto;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  #table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background: #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .filters input, .filters select, .filters button {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
 </style>
 
 <!-- Main Content -->
 <div class="content">
   <div class="header">
     <h1>Member List</h1>
-    
   </div>
 
   <!-- Filters -->
   <div class="filters">
-    <form method="get" action="{% url 'member_list_view' %}" class="mb-4 flex justify-center space-x-2">
+    <form method="get" action="{% url 'member_list_view' %}">
       <input type="text" name="id_card" value="{{ request.GET.id_card }}" placeholder="Search Card">
-      <select name="gender" value="{{ request.GET.gender }}">
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
+      <select name="gender">
+        <option value="">All Genders</option>
+        <option value="Male" {% if request.GET.gender == "Male" %}selected{% endif %}>Male</option>
+        <option value="Female" {% if request.GET.gender == "Female" %}selected{% endif %}>Female</option>
       </select>
       <button type="submit">Search</button>
     </form>
     <form method="get" action="{% url 'some_view' %}">
       <button type="submit">Export</button>
-  </form>
-  
+    </form>
   </div>
 
-
-<div id="table-wrapper">
-<div id="table-scroll">
-<div class="table-container">
-    <table id="memberTable">
-        <thead>
+  <!-- Table -->
+  <div id="table-wrapper">
+    <div id="table-scroll">
+      <div class="table-container">
+        <table id="memberTable">
+          <thead>
             <tr>
-            
-                <th>ID</th>
-                <th>Card</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Address</th>
-                <th>Expiry</th>
-                <th>Gender</th>
-                <th>Join Date</th>
-                <th>Phone Number</th>
-                <th>Profile</th>
-                <th>Renewed</th>
+              <th>ID</th>
+              <th>Card</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Address</th>
+              <th>Expiry</th>
+              <th>Gender</th>
+              <th>Join Date</th>
+              <th>Phone Number</th>
+              <th>Profile</th>
+              <th>Renewed</th>
             </tr>
-        </thead>
-        <tbody id = 'tableBody'>
+          </thead>
+          <tbody>
             {% for item in member_list %}
-            <tr data-gender="{{ item.gender }}" 
-    data-renewed="{{ item.renewed }}">
-
-                <td>{{ forloop.counter }}</td>
-                <td>{{ item.id_card }}</td>
-                <td>{{ item.first_name }}</td>
-                <td>{{ item.last_name }}</td>
-                <td>{{ item.address }}</td>
-                <td>{{ item.expiry }}</td>
-                <td>{{ item.gender }}</td>
-                <td>{{ item.join_date }}</td>
-                <td>{{ item.phone_number }}</td>
-                <td><img src="{{ item.profile_image }}" alt="Profile Image" width="50" height="50"></td>
-                <td>{{ item.renewed }}</td>
+            <tr data-gender="{{ item.gender }}" data-renewed="{{ item.renewed }}">
+              <td>{{ forloop.counter }}</td>
+              <td>{{ item.id_card }}</td>
+              <td>{{ item.first_name }}</td>
+              <td>{{ item.last_name }}</td>
+              <td>{{ item.address }}</td>
+              <td>{{ item.expiry }}</td>
+              <td>{{ item.gender }}</td>
+              <td>{{ item.join_date }}</td>
+              <td>{{ item.phone_number }}</td>
+              <td>
+                <img src="{{ item.profile_image|default:'/static/default-profile.png' }}" alt="Profile Image" width="50" height="50">
+              </td>
+              <td>{{ item.renewed }}</td>
             </tr>
             {% endfor %}
-        </tbody>
-    </table>
-
+          </tbody>
+        </table>
+      </div>
     </div>
-    </div>
-    </div>
-
-
     
-<div class="pagination">
-  <span class="step-links">
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <span class="step-links">
       {% if member_list.has_previous %}
-          <a href="?page=1&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">&laquo; first</a>
-          <a href="?page={{ member_list.previous_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">previous</a> <!-- it will show the request data we find-->
+        <a href="?page=1&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">&laquo; First</a>
+        <a href="?page={{ member_list.previous_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Previous</a>
       {% endif %}
 
       <span class="current">
-          Page {{ member_list.number }} of {{ member_list.paginator.num_pages }}.
+        Page {{ member_list.number }} of {{ member_list.paginator.num_pages }}.
       </span>
 
       {% if member_list.has_next %}
-          <a href="?page={{ member_list.next_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">next</a>
-          <a href="?page={{ member_list.paginator.num_pages }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">last &raquo;</a>
+        <a href="?page={{ member_list.next_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Next</a>
+        <a href="?page={{ member_list.paginator.num_pages }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Last &raquo;</a>
       {% endif %}
-  </span>
+    </span>
+  </div>
 </div>
-
 
 
     {% endblock %}

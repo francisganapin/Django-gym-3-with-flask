@@ -6,12 +6,11 @@
     <title>Orders Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { 
-        font-family: Arial, sans-serif; 
+        body {
+            font-family: Arial, sans-serif; 
         background-color: #f4f6f9; 
         margin: 0; 
         display:center;
-
         }
         .container { display: flex; height: 100vh; }
         .sidebar { width: 250px; background: #1e3a8a; color: white; padding: 20px; }
@@ -20,16 +19,13 @@
         .sidebar ul li { padding: 10px 0; cursor: pointer; }
         .sidebar ul li:hover { background: #3b82f6; }
         .content { flex: 1; padding: 20px; }
-        .header { display: flex; justify-content: space-between; margin-bottom: 20px; }
-        .filters { display: flex; gap: 10px; margin-bottom: 20px; }
-        .filters input, .filters select, .filters button { padding: 8px; border: 1px solid #ccc; border-radius: 5px; }
-        .table-container { background: white; padding: 15px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
-        th { background: #e5e7eb; }
-        .checkbox { width: 20px; }
-
-        .sidebar a, .dropdown-btn {
+        
+        .dropdown {
+            position: relative;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .dropbtn {
             padding: 10px 15px;
             text-decoration: none;
             font-size: 18px;
@@ -42,68 +38,77 @@
             width: 100%;
             cursor: pointer;
         }
-        .sidebar a:hover, .dropdown-btn:hover {
-            background-color: #575757;
-        }
-        .dropdown-container {
+        .dropdown-content {
             display: none;
-            background-color: #262626;
-            padding-left: 15px;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            background-color: #3b86ff;
+            width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
         }
-        .dropdown-btn.active {
-            background-color: #575757;
+        .dropdown-content a {
+            padding: 12px;
+            display: block;
+            color: white;
+            text-decoration: none;
         }
+        .dropdown-content a:hover {
+            background-color: #2563eb;
+        }
+        .show { display: block; }
     </style>
 </head>
-
-
-
-
+<body>
 <div class="container">
-    <!-- Sidebar -->
     <aside class="sidebar">
         <h2>Gym Gimik</h2>
         <ul>
             <li><a href="{% url 'dashboard_views' %}">Dashboard</a></li>
-         
-
-            <button class="dropdown-btn">Member
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-container">
-                <a href="{% url 'member_list_view' %}">Member list</a>
-                <a href="{% url 'member_register_view' %}">Register</a>
-                <a href="{% url 'member_update_views' %}">Update</a>
+            <div class="dropdown">
+                <button class="dropbtn">Member <i class="fa fa-caret-down"></i></button>
+                <div class="dropdown-content">
+                    <a href="{% url 'member_list_view' %}">Member list</a>
+                    <a href="{% url 'member_register_view' %}">Register</a>
+                    <a href="{% url 'member_update_views' %}">Update</a>
+                </div>
             </div>
-
-            <li>Customers</li>
-            <li><strong>Orders</strong></li>
-            <li>Shipping</li>
-            <li>Product</li>
+            <div class="dropdown">
+                <button class="dropbtn">Classes <i class="fa fa-caret-down"></i></button>
+                <div class="dropdown-content">
+                    <a href="{% url 'class_list_view' %}">Class List</a>
+                    <a href="{% url 'member_register_view' %}">Register</a>
+                    <a href="{% url 'member_update_views' %}">Update</a>
+                </div>
+            </div>
         </ul>
     </aside>
-
-<body>
-    {% block content  %}
-   
-    
-    {% endblock %}
-</body>
-
-
-
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
 <script>
-    var dropdowns = document.getElementsByClassName("dropdown-btn");
-
-    for (var i = 0; i < dropdowns.length; i++) {
-        dropdowns[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block" || dropdownContent.style.display === "") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
+    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", function (event) {
+            document.querySelectorAll(".dropdown-content").forEach(function (dropdown) {
+                if (!dropdown.parentElement.contains(event.target)) {
+                    dropdown.classList.remove("show");
+                }
+            });
         });
-    }
+        
+        document.querySelectorAll(".dropbtn").forEach(function (btn) {
+            btn.addEventListener("click", function (event) {
+                event.stopPropagation();
+                let dropdownContent = this.nextElementSibling;
+                dropdownContent.classList.toggle("show");
+            });
+        });
+    });
 </script>
+</body>
+</html>
+
+
