@@ -92,6 +92,61 @@ def member_list_view(request):
 
 
 
+def member_list_view_update(request,member_id,first_name,last_name,expiry):
+
+
+    member_data = {
+        'first_name':first_name,
+        'last_name':last_name,
+        'expiry':expiry
+    }
+    
+     
+    print(list(member_data)) # check this for 
+
+    if request.method == 'POST':
+        id_card = member_id
+        expiry = request.POST.get('expiry')
+
+        queary = { "id_card": { "$regex": id_card } }
+        insert = { "$set":{'expiry':expiry}}
+    try:
+        MemberClass.collection.update_one(queary,insert)
+    except:
+         print('data was not updated')
+    
+    return render (request,'member/member_update_list.html',{'member_data':member_data})
+
+
+
+
+def member_login_view(request,member_id,member_name):
+
+
+    member_name1 = member_name
+    login_date = MemberClass.formatted_date
+     
+    if request.method == 'POST':
+        id_card = member_id
+
+
+        queary = { "id_card": { "$regex": id_card } }
+        insert = { "$set":{'login_date':login_date}}
+    try:
+        MemberClass.collection.update_one(queary,insert)
+    except:
+         print('data was not updated')
+    
+    return render (request,'member/member_update_list.html',{'member_name1':member_name1})
+
+
+
+
+
+
+
+
+
 
    
 
@@ -148,6 +203,7 @@ def member_update_views(request):
          print('data was not updated')
     
     return render (request,'member/member_update.html')
+
 
 
 

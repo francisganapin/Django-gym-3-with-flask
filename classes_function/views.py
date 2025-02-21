@@ -16,7 +16,7 @@ from django.http import JsonResponse
 import requests
 
 def class_list_view(request):
-    api_url_class = 'http://127.0.0.1:5000/api/class/list'
+    api_url_class = 'http://127.0.0.1:5000/api/class/list' # get api address so we can fetch this on our django
     
     try:
         response = requests.get(api_url_class)
@@ -30,3 +30,4 @@ def class_list_view(request):
         'classes_data':classes_data
     }
     return render(request,'classes/classes_list.html',context)
+

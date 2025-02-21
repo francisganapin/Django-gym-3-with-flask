@@ -97,6 +97,11 @@
               <td>{{ item.gender }}</td>
               <td>{{ item.join_date }}</td>
               <td>{{ item.phone_number }}</td>
+
+              <!--- keep this data so it wont changes-->
+              <td><a href="{% url 'member_list_view_update' member_id=item.id_card first_name=item.first_name last_name=item.last_name expiry=item.expiry %}">Update Member</a></td>
+              <!--- keep this data so it wont changes-->
+
               <td>
                 <img src="{{ item.profile_image|default:'/static/default-profile.png' }}" alt="Profile Image" width="50" height="50">
               </td>
