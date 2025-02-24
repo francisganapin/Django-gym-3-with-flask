@@ -15,6 +15,12 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import requests
 
+
+class ClassFunction:
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    db = client['gym_system_db']
+    collection = db['class_list']
+    
 def class_list_view(request):
     api_url_class = 'http://127.0.0.1:5000/api/class/list' # get api address so we can fetch this on our django
     
@@ -31,3 +37,49 @@ def class_list_view(request):
     }
     return render(request,'classes/classes_list.html',context)
 
+
+
+
+
+def class_register_view(request):
+
+    api_url_class = 'http://127.0.0.1:5000/api/class/option'
+    response = ''
+
+    try:
+        response = requests.get(api_url_class)
+        response.raise_for_status()
+        class_data_option = response.json()
+    except Exception as e:
+        print(f'error: {e}')
+        return render(request,'error.html')
+
+    
+    context = {
+            'class_data_option':class_data_option
+        }
+        
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        class_id_card = request.POST.get('class_id')
+        instructor = request.POST.get('instructor')
+        duration = request.POST.get('duration')
+        schedule = request.POST.get('schedule')
+
+            
+        data = {
+            "name": name,
+            "class_id_card":class_id_card, 
+            "instructor":instructor,
+            "duration":duration, 
+            "schedule": schedule
+            }
+
+        try:
+            ClassFunction.collection.insert_one(data)
+            return redirect('class_list_view')
+        except pymongo.errors.DuplicateKeyError:
+            message = f'Member ID Card was already exist {class_id_card}'
+            return render(request, 'classes/classes_register.html',{context})
+
+    return render(request, 'classes/classes_register.html',context) 

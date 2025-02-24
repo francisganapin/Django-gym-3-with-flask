@@ -1,0 +1,45 @@
+
+[
+      {
+        "name": "Strength Training",
+        "description": "Focuses on building muscle mass and increasing strength through exercises like weightlifting, resistance band exercises, and bodyweight exercises."
+      },
+      {
+        "name": "Cardio Workouts",
+        "description": "Includes activities like running, cycling, jump rope, and aerobic dance that aim to improve cardiovascular fitness and endurance."
+      },
+      {
+        "name": "Yoga",
+        "description": "A class that combines physical postures, breathing exercises, and meditation to improve flexibility, strength, and mental well-being."
+      },
+      {
+        "name": "Pilates",
+        "description": "Focuses on core strength, flexibility, and overall body conditioning through controlled movements and exercises."
+      },
+      {
+        "name": "Zumba",
+        "description": "A dance-based workout that combines Latin and international music with dance moves to create an enjoyable and energetic exercise session."
+      },
+      {
+        "name": "HIIT (High-Intensity Interval Training)",
+        "description": "A class that alternates between short bursts of intense exercise and brief periods of rest or low-intensity exercise to maximize calorie burn and improve fitness."
+      },
+      {
+        "name": "Spin Class",
+        "description": "A high-energy indoor cycling class that simulates outdoor biking and is set to motivating music."
+      },
+      {
+        "name": "Circuit Training",
+        "description": "Involves rotating through different exercise stations, each targeting different muscle groups, to provide a full-body workout."
+      },
+      {
+        "name": "CrossFit",
+        "description": "A high-intensity fitness program that combines elements of weightlifting, cardio, and functional movements."
+      },
+      {
+        "name": "Barre",
+        "description": "A workout inspired by ballet, Pilates, and yoga that focuses on small, controlled movements to build strength, flexibility, and balance."
+      }
+    ]
+  
+  

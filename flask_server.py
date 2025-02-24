@@ -9,6 +9,7 @@ app = Flask(__name__)
 db_connection = ConnectionMongoDB()
 member_collection = db_connection.get_collection('member_list')
 class_collection = db_connection.get_collection('class_list')
+class_option_collection = db_connection.get_collection('class_option')
 
 
 @app.route('/api/dashboard/',methods=['GET'])
@@ -54,8 +55,10 @@ def show_classes():
     class_list = list(class_collection.find({},{'_id':0}))
     return jsonify(class_list),200
 
-
-
+@app.route('/api/class/option',methods=['GET'])
+def api_class_option():
+    class_list =list(class_option_collection.find({},{'_id':0}))
+    return jsonify(class_list),200
 
 if __name__ == '__main__':
     app.run(debug=True)
