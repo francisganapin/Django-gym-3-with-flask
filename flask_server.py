@@ -2,6 +2,8 @@ from flask import Flask,jsonify,Response
 import json
 from pymongo_server import ConnectionMongoDB
 from datetime import datetime
+from bson import ObjectId
+
 
 app = Flask(__name__)
 
@@ -48,7 +50,12 @@ def dashbard():
 @app.route('/api/members/list',methods=['GET'])
 def show_member():
     user = list(member_collection.find({},{'_id':0}))
-    return jsonify(user),200
+    
+    #exclude archive true so we can hide the member pass it to flask so it wont show if we search
+    post_exclude = [archive for archive in user if archive['archive'] != True ]
+    
+
+    return jsonify(post_exclude),200
 
 @app.route('/api/class/list',methods=['GET'])
 def show_classes():
@@ -59,6 +66,11 @@ def show_classes():
 def api_class_option():
     class_list =list(class_option_collection.find({},{'_id':0}))
     return jsonify(class_list),200
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

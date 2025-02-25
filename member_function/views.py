@@ -59,21 +59,28 @@ def member_list_view(request):
         response = requests.get(api_url_member,timeout=5)
         response.raise_for_status()
     
+    
+
+
         posts = response.json() if isinstance(response.json(),list) else []
+
+        #exclude archive true so we can hide the member pass it to flask so it wont show if we search
+        post_exclude = [archive for archive in posts if archive['archive'] != True ]
+
 
         queary_card = request.GET.get('id_card')
         queary_gender = request.GET.get('gender')
         # we use this code to get queary as list on member.get('id_card') we find id card
         if queary_card:
-            posts = [member for member in posts if queary_card in str(member.get('id_card', ''))]
-            if not posts:
-                posts = [MemberClass.no_data]
+            post_exclude = [member for member in posts if queary_card in str(member.get('id_card', ''))]
+            if not post_exclude:
+                post_exclude = [MemberClass.no_data]
         
         if queary_gender:
-            posts = [member for member in posts if queary_gender in str(member.get('gender',''))]
+            post_exclude = [member for member in posts if queary_gender in str(member.get('gender',''))]
 
 
-        paginator = Paginator(posts,10)
+        paginator = Paginator(post_exclude,10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
@@ -82,7 +89,7 @@ def member_list_view(request):
         print(f"sorry your api provider was not working this time")
         return render(request,'error.html')
  
-    print(posts)
+    print(post_exclude)
 
     context = {
         'member_list':page_obj
@@ -243,3 +250,16 @@ def some_view(request):
     
 
     return response
+
+
+def archive_member_view(request,id_card):
+
+    if request.method == 'POST':
+        data = {'id_card':id_card}
+        newvalues = {"$set":{'archive':True}}
+    try:
+        MemberClass.collection.update_one(data,newvalues)
+        return redirect('member_list_view')
+    except pymongo.errors.DuplicateKeyError:
+        message = f'Member ID Card was not exist {data}'
+        return render(request, 'member/member_list.html',{'message':message})

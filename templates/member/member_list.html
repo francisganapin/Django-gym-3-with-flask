@@ -83,6 +83,8 @@
               <th>Phone Number</th>
               <th>Profile</th>
               <th>Renewed</th>
+              <th>Update</th>
+              <th>Archive</th>
             </tr>
           </thead>
           <tbody>
@@ -98,14 +100,65 @@
               <td>{{ item.join_date }}</td>
               <td>{{ item.phone_number }}</td>
 
-              <!--- keep this data so it wont changes-->
-              <td><a href="{% url 'member_list_view_update' member_id=item.id_card first_name=item.first_name last_name=item.last_name expiry=item.expiry %}">Update Member</a></td>
-              <!--- keep this data so it wont changes-->
-
+          
               <td>
                 <img src="{{ item.profile_image|default:'/static/default-profile.png' }}" alt="Profile Image" width="50" height="50">
               </td>
+
               <td>{{ item.renewed }}</td>
+
+
+              <!--- keep this data so it wont changes--> <!---update Logic-->
+              <td><a href="{% url 'member_list_view_update' member_id=item.id_card first_name=item.first_name last_name=item.last_name expiry=item.expiry %}">Update Member</a></td>
+              <!--- keep this data so it wont changes-->
+
+
+              <!-- archive logic-->
+              <td>
+          
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                  Archive
+                </button>
+
+                <form action="{% url 'archive_member_view' item.id_card %}" method="post" style="display:inline;">
+                  {% csrf_token %}
+              
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Archive The Member?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+        
+                      
+                        
+                      <!-- Button trigger modal -->
+        
+                      {{ item.first_name }}
+                      {{ item.last_name }}
+                      {{ item.expiry }}
+        
+                  
+        
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                          Yes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              </form>
+              
+              </td>
+
             </tr>
             {% endfor %}
           </tbody>
@@ -134,6 +187,19 @@
     </span>
   </div>
 </div>
+
+
+
+
+
+
+<script>
+  $('#exampleModal').on('shown.bs.modal', function () {
+    $('#myInput').trigger('focus')
+  })
+</script>
+
+
 
 
     {% endblock %}

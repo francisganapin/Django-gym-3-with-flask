@@ -1,3 +1,6 @@
+2-25-2025
+	add delete for class and add archive member
+
 2-21-2025
 	added function for class
 

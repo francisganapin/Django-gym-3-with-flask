@@ -5,5 +5,6 @@ from . import views  # Adjust this to import your views correctly
 
 urlpatterns = [
     path('class-list/', views.class_list_view, name='class_list_view'),
+    path('class-list/delete/<str:class_id_card>', views.delete_item_view, name='delete_item_view'),
     path('class-list/register',views.class_register_view,name='class_register_view')
 ]

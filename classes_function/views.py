@@ -38,6 +38,20 @@ def class_list_view(request):
     return render(request,'classes/classes_list.html',context)
 
 
+def delete_item_view(request,class_id_card):
+
+    if request.method == 'POST':
+        data = {'class_id_card':class_id_card}
+
+    try:
+        ClassFunction.collection.delete_one(data)
+        return redirect('class_list_view')
+    except pymongo.errors.DuplicateKeyError:
+        message = f'Member ID Card was not exist {data}'
+        return render(request, 'classes/classes_register.html',{'message':message})
+    
+
+
 
 
 
@@ -83,3 +97,4 @@ def class_register_view(request):
             return render(request, 'classes/classes_register.html',{context})
 
     return render(request, 'classes/classes_register.html',context) 
+
