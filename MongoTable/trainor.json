@@ -1,0 +1,32 @@
+[
+    {
+      "trainer_id": "T001",
+      "first_name": "Juan",
+      "last_name": "Dela Cruz",
+      "birthday": "1985-03-15",
+      "specialty": "Strength Training",
+      "phone_number": "0917-123-4567",
+      "rate": 50,
+      "percentage": 20
+    },
+    {
+      "trainer_id": "T002",
+      "first_name": "Maria",
+      "last_name": "Santos",
+      "birthday": "1990-05-10",
+      "specialty": "Weightlifting",
+      "phone_number": "0922-345-6789",
+      "rate": 60,
+      "percentage": 15
+    },
+    {
+      "trainer_id": "T003",
+      "first_name": "Jose",
+      "last_name": "Rizal",
+      "birthday": "1978-12-30",
+      "specialty": "Bodybuilding",
+      "phone_number": "0918-987-6543",
+      "rate": 55,
+      "percentage": 25
+    }
+]

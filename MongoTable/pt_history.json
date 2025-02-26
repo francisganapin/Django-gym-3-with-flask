@@ -1,0 +1,27 @@
+[
+    {
+      "trainer_id": "TR001",
+      "package": {
+        "price": 500,
+        "attendance": 0,
+        "expiry_date": "2025-12-31"
+      }
+    },
+    {
+      "trainer_id": "TR002",
+      "package": {
+        "price": 700,
+        "attendance": 0,
+        "expiry_date": "2025-12-31"
+      }
+    },
+    {
+      "trainer_id": "TR003",
+      "package": {
+        "price": 650,
+        "attendance": 0,
+        "expiry_date": "2025-12-31"
+      }
+    }
+  ]
+  

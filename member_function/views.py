@@ -48,7 +48,12 @@ class MemberClass:
             filename = fs.save(myfile.name,myfile)
             print(filename)
 
-        
+class LoginClass:
+    # Connect to MongoDB
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    db = client['gym_system_db']
+    collection = db['member_login']
+
 
 def member_list_view(request):
 
@@ -127,24 +132,28 @@ def member_list_view_update(request,member_id,first_name,last_name,expiry):
 
 
 
-def member_login_view(request,member_id,member_name):
+def member_login_view_function(request):
 
-
-    member_name1 = member_name
     login_date = MemberClass.formatted_date
-     
+    context = {}
     if request.method == 'POST':
-        id_card = member_id
+        id_card = request.POST.get('id_card')
 
 
-        queary = { "id_card": { "$regex": id_card } }
-        insert = { "$set":{'login_date':login_date}}
+        query = {"id_card": id_card }    
+       
     try:
-        MemberClass.collection.update_one(queary,insert)
+        member_data = MemberClass.collection.find_one(query)
+        context = {'member':member_data,'login_date':login_date}
+
+        print(login_date)
+        print(context['member']['first_name'], context['member']['last_name'],context['member']['expiry'])
+        LoginClass.collection.insert_one(context)
+
     except:
          print('data was not updated')
     
-    return render (request,'member/member_update_list.html',{'member_name1':member_name1})
+    return render (request,'member/member_login.html',context)
 
 
 
@@ -217,7 +226,7 @@ def member_update_views(request):
 import csv
 from django.http import HttpResponse
 
-
+#export function
 def some_view(request):
     # Create the HttpResponse object with the appropriate CSV header.
 
