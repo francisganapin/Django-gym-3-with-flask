@@ -27,9 +27,8 @@ class MemberClass:
             }
 
     today = datetime.now()
+  
     
-    # Format the date as MM-DD-YYYY
-    formatted_date = today.strftime("%m-%d-%Y")
 
      # Connect to MongoDB
     client = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -59,7 +58,8 @@ def member_list_view(request):
 
     api_url_member = 'http://127.0.0.1:5000/api/members/list'
     response = ''
-
+    login_date = MemberClass.today.date()
+    print(login_date)
     try:
         response = requests.get(api_url_member,timeout=5)
         response.raise_for_status()
@@ -68,6 +68,10 @@ def member_list_view(request):
 
 
         posts = response.json() if isinstance(response.json(),list) else []
+
+        #parse date logic we convert api date string to date object
+        #for post in posts:
+            #post['expiry'] = datetime.strptime(post['expiry'],"%Y-%m-%d")
 
         #exclude archive true so we can hide the member pass it to flask so it wont show if we search
         post_exclude = [archive for archive in posts if archive['archive'] != True ]
@@ -97,7 +101,8 @@ def member_list_view(request):
     print(post_exclude)
 
     context = {
-        'member_list':page_obj
+        'member_list':page_obj,
+        'login_date':login_date
     }
     return render(request, 'member/member_list.html', context)
 
@@ -190,7 +195,8 @@ def member_register_view(request):
             'phone_number':phone_number,
             'profile_image':profile_image_path,
             'join_date':join_date,
-            'renewed':renewed
+            'renewed':renewed,
+            'archive':False
         }
 
         try:
@@ -227,7 +233,7 @@ import csv
 from django.http import HttpResponse
 
 #export function
-def some_view(request):
+def export_view(request):
     # Create the HttpResponse object with the appropriate CSV header.
 
     api_url_member = 'http://127.0.0.1:5000/api/members/list'
@@ -243,7 +249,7 @@ def some_view(request):
     )
 
     writer = csv.writer(response)
-    writer.writerow(["id_card", "expiry", "first_name", "last_name","gender","phone_number","profile_image","join_date","renewed"])
+    writer.writerow(["id_card", "expiry", "first_name", "last_name","gender","phone_number","profile_image","join_date","renewed","archive"])
     for member in data:
         writer.writerow([
             member['id_card'],
@@ -254,7 +260,8 @@ def some_view(request):
             member['phone_number'],
             member['profile_image'],
             member['join_date'],
-            member['renewed']
+            member['renewed'],
+            member['archive']
         ])
     
 

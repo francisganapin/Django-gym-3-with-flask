@@ -52,10 +52,10 @@ def show_member():
     user = list(member_collection.find({},{'_id':0}))
     
     #exclude archive true so we can hide the member pass it to flask so it wont show if we search
-    post_exclude = [archive for archive in user if archive['archive'] != True ]
+    #post_exclude = [archive for archive in user if archive['archive'] != True ]
     
 
-    return jsonify(post_exclude),200
+    return jsonify(user),200 #post_exlcude
 
 @app.route('/api/class/list',methods=['GET'])
 def show_classes():

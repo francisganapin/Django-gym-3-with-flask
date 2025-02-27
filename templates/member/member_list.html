@@ -41,7 +41,18 @@
     border: 1px solid #ccc;
     border-radius: 5px;
   }
+
+  /* color logic for expiry*/
+  .red{
+    color:red;
+  }
+  .green{
+    color:green;
+  }
+
+
 </style>
+
 
 <!-- Main Content -->
 <div class="content">
@@ -60,7 +71,7 @@
       </select>
       <button type="submit">Search</button>
     </form>
-    <form method="get" action="{% url 'some_view' %}">
+    <form method="get" action="{% url 'export_view' %}">
       <button type="submit">Export</button>
     </form>
   </div>
@@ -95,7 +106,11 @@
               <td>{{ item.first_name }}</td>
               <td>{{ item.last_name }}</td>
               <td>{{ item.address }}</td>
-              <td>{{ item.expiry }}</td>
+
+              <td class="py-3 px-5 expiry-date">
+                <strong><span>{{ item.expiry }}</span></strong>
+              </td>
+              
               <td>{{ item.gender }}</td>
               <td>{{ item.join_date }}</td>
               <td>{{ item.phone_number }}</td>
@@ -201,5 +216,20 @@
 
 
 
-
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var today = new Date();
+      var expiryElements = document.querySelectorAll('.expiry-date span');
+  
+      expiryElements.forEach(function(expiryElement) {
+          var expiryDate = new Date(expiryElement.innerText.trim());
+          if (expiryDate < today) {
+              expiryElement.style.color = 'red';
+          } else {
+              expiryElement.style.color = 'green';
+          }
+      });
+  });
+  </script>
+  
     {% endblock %}
