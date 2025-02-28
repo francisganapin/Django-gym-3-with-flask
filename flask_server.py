@@ -9,10 +9,13 @@ app = Flask(__name__)
 
 
 db_connection = ConnectionMongoDB()
-member_collection = db_connection.get_collection('member_list')
-class_collection = db_connection.get_collection('class_list')
-class_option_collection = db_connection.get_collection('class_option')
+member_collection = db_connection.get_collection('member_list') # get member list of our member
 
+class_collection = db_connection.get_collection('class_list') #get class list 
+
+class_option_collection = db_connection.get_collection('class_option') # get collection for class option in our selection
+
+class_login_collection = db_connection.get_collection('member_login') #get collection for login list
 
 @app.route('/api/dashboard/',methods=['GET'])
 def dashbard():
@@ -68,8 +71,17 @@ def api_class_option():
     return jsonify(class_list),200
 
 
-
-
+@app.route('/api/member/login/history', methods=['GET'])
+def api_login_list_history():
+    try:
+        # Query and convert ObjectId to string
+        member_login_list = [
+            {**doc, "_id": str(doc["_id"]), "member": {**doc["member"], "_id": str(doc["member"]["_id"])}} 
+            for doc in class_login_collection.find({})
+        ]
+        return jsonify(member_login_list), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 
 
 
 if __name__ == '__main__':

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<style>
+    #table-wrapper {
+      position: relative;
+    }
+    #table-scroll {
+      height: 600px;
+      overflow: auto;
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    #table-wrapper table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .filters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .filters input, .filters select, .filters button {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  
+    /* color logic for expiry*/
+    .red{
+      color:red;
+    }
+    .green{
+      color:green;
+    }
+  
+  
+  </style>
+  
+  
+  <!-- Main Content -->
+  <div class="content">
+    <div class="header">
+      <h1>Member List</h1>
+    </div>
+  
+    <!-- Filters -->
+    <div class="filters">
+      <form method="get" action="{% url 'member_list_view' %}">
+        <input type="text" name="id_card" value="{{ request.GET.id_card }}" placeholder="Search Card">
+        <select name="gender">
+          <option value="">All Genders</option>
+          <option value="Male" {% if request.GET.gender == "Male" %}selected{% endif %}>Male</option>
+          <option value="Female" {% if request.GET.gender == "Female" %}selected{% endif %}>Female</option>
+        </select>
+        <button type="submit">Search</button>
+      </form>
+      <form method="get" action="{% url 'export_view' %}">
+        <button type="submit">Export</button>
+      </form>
+    </div>
+  
+    <!-- Table -->
+    <div id="table-wrapper">
+      <div id="table-scroll">
+        <div class="table-container">
+          <table id="memberTable">
+            <thead>
+              <tr>
+                z
+                <th>Login Date</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>ID Card</th>
+
+              </tr>
+            </thead>
+            <tbody>
+                {% for item in login_detail %}
+
+<tr>            
+                <td>{{item.login_date}}</td>
+                <td>{{item.member.first_name}}</td>
+                <td>{{item.member.last_name}}</td>
+                <td>{{item.member.id_card}}</td>
+</tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div>
+  
+    <!-- Pagination -->
+    <div class="pagination">
+      <span class="step-links">
+        {% if member_list.has_previous %}
+          <a href="?page=1&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">&laquo; First</a>
+          <a href="?page={{ member_list.previous_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Previous</a>
+        {% endif %}
+  
+        <span class="current">
+          Page {{ member_list.number }} of {{ member_list.paginator.num_pages }}.
+        </span>
+  
+        {% if member_list.has_next %}
+          <a href="?page={{ member_list.next_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Next</a>
+          <a href="?page={{ member_list.paginator.num_pages }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+
+{% endblock %}

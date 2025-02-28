@@ -10,5 +10,6 @@ urlpatterns = [
     path('member_login_view/',views.member_login_view_function,name='member_login_view'),
     path('member-register/', views.member_register_view, name='member_register_view'),
     path('member_update_views/',views.member_update_views,name='member_update_views'),
-    path('member-list/list/export',views.export_view,name='export_view')
+    path('member-list/list/export',views.export_view,name='export_view'),
+    path('member/login/list',views.member_login_list_view,name='member_login_list_view')
 ]

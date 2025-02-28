@@ -106,9 +106,19 @@ def member_list_view(request):
     }
     return render(request, 'member/member_list.html', context)
 
-
-
-
+def member_login_list_view(request):
+    api_url_data = 'http://127.0.0.1:5000/api/member/login/history'
+    response = ''
+    try:
+        response = requests.get(api_url_data)
+        response.raise_for_status()
+        posts = response.json() if isinstance(response.json(),list) else []
+        print(response)
+    except:
+        print('sorry api provider was not working this time')
+        return render(request,'error.html')
+    return render (request,'member/member_login_list.html',{'login_detail':posts})
+    
 def member_list_view_update(request,member_id,first_name,last_name,expiry):
 
 
@@ -139,7 +149,7 @@ def member_list_view_update(request,member_id,first_name,last_name,expiry):
 
 def member_login_view_function(request):
 
-    login_date = MemberClass.formatted_date
+    login_date = MemberClass.today
     context = {}
     if request.method == 'POST':
         id_card = request.POST.get('id_card')
