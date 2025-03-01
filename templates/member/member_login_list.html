@@ -61,7 +61,7 @@
   
     <!-- Filters -->
     <div class="filters">
-      <form method="get" action="{% url 'member_list_view' %}">
+      <form method="get" action="{% url 'member_login_list_view' %}">
         <input type="text" name="id_card" value="{{ request.GET.id_card }}" placeholder="Search Card">
         <select name="gender">
           <option value="">All Genders</option>
@@ -82,10 +82,11 @@
           <table id="memberTable">
             <thead>
               <tr>
-                z
+                
                 <th>Login Date</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Gender</th>
                 <th>ID Card</th>
 
               </tr>
@@ -97,6 +98,7 @@
                 <td>{{item.login_date}}</td>
                 <td>{{item.member.first_name}}</td>
                 <td>{{item.member.last_name}}</td>
+                <td>{{item.member.gender}}</td>
                 <td>{{item.member.id_card}}</td>
 </tr>
                 {% endfor %}
@@ -110,18 +112,18 @@
     <!-- Pagination -->
     <div class="pagination">
       <span class="step-links">
-        {% if member_list.has_previous %}
+        {% if login_detail.has_previous %}
           <a href="?page=1&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">&laquo; First</a>
-          <a href="?page={{ member_list.previous_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Previous</a>
+          <a href="?page={{ login_detail.previous_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Previous</a>
         {% endif %}
   
         <span class="current">
-          Page {{ member_list.number }} of {{ member_list.paginator.num_pages }}.
+          Page {{ login_detail.number }} of {{ login_detail.paginator.num_pages }}.
         </span>
   
-        {% if member_list.has_next %}
-          <a href="?page={{ member_list.next_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Next</a>
-          <a href="?page={{ member_list.paginator.num_pages }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Last &raquo;</a>
+        {% if login_detail.has_next %}
+          <a href="?page={{ login_detail.next_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Next</a>
+          <a href="?page={{ login_detail.paginator.num_pages }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Last &raquo;</a>
         {% endif %}
       </span>
     </div>

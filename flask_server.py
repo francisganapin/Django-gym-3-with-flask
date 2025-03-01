@@ -7,7 +7,7 @@ from bson import ObjectId
 
 app = Flask(__name__)
 
-
+ 
 db_connection = ConnectionMongoDB()
 member_collection = db_connection.get_collection('member_list') # get member list of our member
 
@@ -16,6 +16,9 @@ class_collection = db_connection.get_collection('class_list') #get class list
 class_option_collection = db_connection.get_collection('class_option') # get collection for class option in our selection
 
 class_login_collection = db_connection.get_collection('member_login') #get collection for login list
+
+
+class_trainor_list = db_connection.get_collection('trainor_list') #get class list 
 
 @app.route('/api/dashboard/',methods=['GET'])
 def dashbard():
@@ -64,6 +67,11 @@ def show_member():
 def show_classes():
     class_list = list(class_collection.find({},{'_id':0}))
     return jsonify(class_list),200
+
+@app.route('/api/trainor/list',methods=['GET'])
+def show_trainor_list():
+    trainor_list = list(class_trainor_list.find({},{'_id':0}))
+    return jsonify(trainor_list),200
 
 @app.route('/api/class/option',methods=['GET'])
 def api_class_option():

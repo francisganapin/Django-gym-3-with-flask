@@ -111,22 +111,32 @@
     .show {
       display: block;
     }
+    .Gym_name{
+      font-size: 80px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <aside class="sidebar">
-      <h2>Gym Gimik</h2>
+
+      <div class="Gym_name">
+        <h2>Gym Gimik</h2>
+      </div>
+
       <ul>
-        <li>
-          <a href="{% url 'dashboard_views' %}">Dashboard</a>
+        
+        <li class="dropdown">
+          <button class="dropbtn"><a href="{% url 'dashboard_views' %}">Dashboard</a></button>
         </li>
+
         <li class="dropdown">
           <button class="dropbtn">Member <i class="fa fa-caret-down"></i></button>
           <div class="dropdown-content">
             <a href="{% url 'member_list_view' %}">Member list</a>
             <a href="{% url 'member_register_view' %}">Register</a>
             <a href="{% url 'member_update_views' %}">Update</a>
+            <a href="{% url 'member_login_list_view' %}">Login List History</a>
             <a href="{% url 'member_login_view' %}">Login</a>
           </div>
         </li>

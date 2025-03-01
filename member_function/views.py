@@ -113,11 +113,36 @@ def member_login_list_view(request):
         response = requests.get(api_url_data)
         response.raise_for_status()
         posts = response.json() if isinstance(response.json(),list) else []
+
+
+        query_card = request.GET.get('id_card')
+        query_gender = request.GET.get('gender')
+
+        # we use this code to get queary as list on member.get('id_card') we find id card dont add this
+
+        #if queary_card:
+            #posts = [member for member in posts if queary_card in str(member.get('member', {}).get('id_card', ''))]
+          
+        
+        #if queary_gender:
+            #posts = [member for member in posts if queary_gender in str(member.get('gender', {}).get('gender',''))]
+            
+        if query_card:
+            posts = [member for member in posts if query_card in str(member.get('member', {}).get('id_card', ''))]
+        
+        if query_gender:
+            posts = [member for member in posts if query_gender in str(member.get('member', {}).get('gender', ''))]
+
+        paginator = Paginator(posts,10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+
         print(response)
     except:
         print('sorry api provider was not working this time')
         return render(request,'error.html')
-    return render (request,'member/member_login_list.html',{'login_detail':posts})
+    return render (request,'member/member_login_list.html',{'login_detail':page_obj})
     
 def member_list_view_update(request,member_id,first_name,last_name,expiry):
 
