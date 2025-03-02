@@ -22,5 +22,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('',include('member_function.urls')),
     path('',include('classes_function.urls')),
+    path('',include('trainor_function.urls')),
     path('',include('dashboard.urls'))
 ]

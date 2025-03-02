@@ -10,7 +10,7 @@
 
         <form action="{% url 'class_register_view' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-        
+            
             
             <div class="form-group">
                 <label for="name">Name</label>
@@ -22,10 +22,13 @@
             </div>
 
 
+           
             <div class="form-group">
                 <label for="last_name">Class ID:</label>
-                <input type="text" id="class_id_card" name="class_id_card" required>
+                <input type="text" id="class_id_card" name="class_id_card" value="GIMIK-{{random_id}}" required readonly>
             </div>
+            
+          
             
             <div class="form-group">
                 <label for="instructor">Trainor</label>
@@ -143,6 +146,10 @@
     
     
     
+<script>
+    let genBtn = document.qu
 
+
+</script>
     
 {% endblock %}

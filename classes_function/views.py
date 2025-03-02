@@ -1,20 +1,20 @@
 from django.shortcuts import render, redirect
 import requests
 from django.core.paginator import Paginator
-import logging
-import datetime
-from datetime import datetime
+
+
 # Create your views here.
 # Create your views here.\
 import pymongo
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.core.files.storage import FileSystemStorage
+
 
 from django.shortcuts import render
-from django.http import JsonResponse
+
 import requests
 
+import secrets
+import string
 
 class ClassFunction:
     client = pymongo.MongoClient('mongodb://localhost:27017/')
@@ -58,7 +58,10 @@ def delete_item_view(request,class_id_card):
 
 
 
-
+def generate_random_id(length=8):
+    length = 8
+    random_string = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(length))
+    return ''.join(random_string)
 
 def class_register_view(request):
 
@@ -77,15 +80,18 @@ def class_register_view(request):
         response_class.raise_for_status()
         class_data_option = response_class.json()
 
-     
+        random_id = generate_random_id()
     except Exception as e:
         print(f'error: {e}')
         return render(request,'error.html')
 
     
+    
+
     context = {
             'class_data_option':class_data_option,
-            'trainor_data_option':trainor_data_option
+            'trainor_data_option':trainor_data_option,
+            'random_id':random_id
         }
         
     if request.method == 'POST':
@@ -95,7 +101,8 @@ def class_register_view(request):
         duration = request.POST.get('duration')
         schedule = request.POST.get('schedule')
 
-           
+        
+
         data = {
             "name": name,
             "class_id_card":class_id_card, 

@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+
+<style>
+  #table-wrapper {
+    position: relative;
+  }
+  #table-scroll {
+    height: 600px;
+    overflow: auto;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  #table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background: #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .filters input, .filters select, .filters button {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  /* color logic for expiry*/
+  .red{
+    color:red;
+  }
+  .green{
+    color:green;
+  }
+
+
+</style>
+
+
+<!-- Main Content -->
+<div class="content">
+  <div class="header">
+    <h1>Member List</h1>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <form method="get" action="{% url 'trainor_list_view' %}">
+      <input type="text" name="trainer_id" value="{{ request.GET.trainer_id }}" placeholder="Search Card">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <!-- Table -->
+  <div id="table-wrapper">
+    <div id="table-scroll">
+      <div class="table-container">
+        <table id="memberTable">
+          <thead>
+            <tr>
+              <th>Trainor ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Birthday</th>
+              <th>Specialty</th>
+              <th>Phone Number</th>
+              <th>Rate</th>
+              <th>Percent</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in trainor_list %}
+           <tr>
+         
+            <td>{{item.trainer_id}}</td>
+            <td>{{item.first_name}}</td>
+            <td>{{item.last_name}}</td>
+            <td>{{item.birthday}}</td>
+            <td>{{item.specialty}}</td>
+            <td>{{item.phone_number}}</td>
+            <td>{{item.rate}}</td>
+            <td>{{item.percentage}}</td>
+    
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <span class="step-links">
+      {% if member_list.has_previous %}
+        <a href="?page=1&id_card={{ request.GET.trainer_id }}">&laquo; First</a>
+        <a href="?page={{ trainor_list.previous_page_number }}&id_card={{ request.GET.trainer_id }}">Previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ trainor_list.number }} of {{ trainor_list.paginator.num_pages }}.
+      </span>
+
+      {% if member_list.has_next %}
+        <a href="?page={{ trainor_list.next_page_number }}&trainer_id={{ request.GET.trainer_id }}">Next</a>
+        <a href="?page={{ trainor_list.paginator.num_pages }}&trainer_id={{ request.GET.trainer_id }}">Last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+</div>
+
+
+
+
+
+
+<script>
+  $('#exampleModal').on('shown.bs.modal', function () {
+    $('#myInput').trigger('focus')
+  })
+</script>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var today = new Date();
+      var expiryElements = document.querySelectorAll('.expiry-date span');
+  
+      expiryElements.forEach(function(expiryElement) {
+          var expiryDate = new Date(expiryElement.innerText.trim());
+          if (expiryDate < today) {
+              expiryElement.style.color = 'red';
+          } else {
+              expiryElement.style.color = 'green';
+          }
+      });
+  });
+  </script>
+  
+    {% endblock %}

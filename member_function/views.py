@@ -314,3 +314,4 @@ def archive_member_view(request,id_card):
     except pymongo.errors.DuplicateKeyError:
         message = f'Member ID Card was not exist {data}'
         return render(request, 'member/member_list.html',{'message':message})
+    
