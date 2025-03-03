@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="container_div">
+    <div class="form-container">
+        <h2>Member Update Expiry Form</h2>
+
+        <form action="{% url 'trainor_register_view' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="trainer_id">Trainer ID:</label>
+                <input type="text" id="trainer_id" name="trainer_id" value="GIMIK-{{ random_id }}" required readonly>
+              </div>
+              
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" value="{{ first_name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" value="{{ last_name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="birthday">Birthday:</label>
+                <input type="text" id="birthday" name="birthday" value="{{ birthday }}" required>
+            </div>
+            <div class="form-group">
+                <label for="specialty">Specialty:</label>
+                <select id="specialty" name="specialty" required>
+                  {% for item in class_data_option %}
+                    <option value="{{ item.name }}">{{ item.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              
+            <div class="form-group">
+                <label for="phone_number">Phone Number:</label>
+                <input type="tel" id="phone_number" name="phone_number" value="{{ phone_number }}" required>
+            </div>
+            <div class="form-group">
+                <label for="rate">Rate:</label>
+                <input type="text" id="rate" name="rate" value="{{ rate }}" required>
+            </div>
+            <div class="form-group">
+                <label for="percentage">Percentage:</label>
+                <input type="text" id="percentage" name="percentage" value="{{ percentage }}" required>
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+</div>
+
+
+<style>
+    /* Centering the form */
+    .container_div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+      
+        
+    }
+
+    .form-container {
+        background: #fff; 
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        width: 450px;
+        text-align: center;
+        
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        font-size: 22px;
+
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="tel"],
+    select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    input[type="file"] {
+        width: 100%;
+        border: none;
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+        background-color: #45a049;
+    }
+</style>
+
+    
+    
+    
+    
+
+    
+{% endblock %}

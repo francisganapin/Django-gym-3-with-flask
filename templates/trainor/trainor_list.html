@@ -57,7 +57,7 @@
 <!-- Main Content -->
 <div class="content">
   <div class="header">
-    <h1>Member List</h1>
+    <h1>Trainor List</h1>
   </div>
 
   <!-- Filters -->
@@ -110,7 +110,7 @@
   <!-- Pagination -->
   <div class="pagination">
     <span class="step-links">
-      {% if member_list.has_previous %}
+      {% if trainor_list.has_previous %}
         <a href="?page=1&id_card={{ request.GET.trainer_id }}">&laquo; First</a>
         <a href="?page={{ trainor_list.previous_page_number }}&id_card={{ request.GET.trainer_id }}">Previous</a>
       {% endif %}
@@ -119,7 +119,7 @@
         Page {{ trainor_list.number }} of {{ trainor_list.paginator.num_pages }}.
       </span>
 
-      {% if member_list.has_next %}
+      {% if trainor_list.has_next %}
         <a href="?page={{ trainor_list.next_page_number }}&trainer_id={{ request.GET.trainer_id }}">Next</a>
         <a href="?page={{ trainor_list.paginator.num_pages }}&trainer_id={{ request.GET.trainer_id }}">Last &raquo;</a>
       {% endif %}
@@ -139,21 +139,5 @@
 </script>
 
 
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-      var today = new Date();
-      var expiryElements = document.querySelectorAll('.expiry-date span');
   
-      expiryElements.forEach(function(expiryElement) {
-          var expiryDate = new Date(expiryElement.innerText.trim());
-          if (expiryDate < today) {
-              expiryElement.style.color = 'red';
-          } else {
-              expiryElement.style.color = 'green';
-          }
-      });
-  });
-  </script>
-  
-    {% endblock %}
+{% endblock %}

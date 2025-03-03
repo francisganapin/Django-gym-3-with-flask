@@ -7,8 +7,8 @@ from bson import ObjectId
 
 app = Flask(__name__)
 
- 
 db_connection = ConnectionMongoDB()
+
 member_collection = db_connection.get_collection('member_list') # get member list of our member
 
 class_collection = db_connection.get_collection('class_list') #get class list 

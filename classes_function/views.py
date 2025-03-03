@@ -85,9 +85,6 @@ def class_register_view(request):
         print(f'error: {e}')
         return render(request,'error.html')
 
-    
-    
-
     context = {
             'class_data_option':class_data_option,
             'trainor_data_option':trainor_data_option,
