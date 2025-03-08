@@ -20,8 +20,8 @@ from django.urls import path,include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('',include('member_function.urls')),
-    path('',include('classes_function.urls')),
-    path('',include('trainor_function.urls')),
-    path('',include('dashboard.urls'))
+    path('',include('a1_member_function.urls')),
+    path('',include('a1_classes_function.urls')),
+    path('',include('a1_trainor_function.urls')),
+    path('',include('a1_dashboard.urls'))
 ]

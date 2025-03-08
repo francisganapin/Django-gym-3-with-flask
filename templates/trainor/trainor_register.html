@@ -6,13 +6,13 @@
 
 <div class="container_div">
     <div class="form-container">
-        <h2>Member Update Expiry Form</h2>
+        <h2>Register Trainor</h2>
 
         <form action="{% url 'trainor_register_view' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 <label for="trainer_id">Trainer ID:</label>
-                <input type="text" id="trainer_id" name="trainer_id" value="GIMIK-{{ random_id }}" required readonly>
+                <input type="text" id="trainer_id" name="trainer_id" value="GIMIK-{{ random_id }}-TRAINOR" required readonly>
               </div>
               
             <div class="form-group">

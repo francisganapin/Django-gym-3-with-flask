@@ -9,20 +9,17 @@ app = Flask(__name__)
 
 db_connection = ConnectionMongoDB()
 
-member_collection = db_connection.get_collection('member_list') # get member list of our member
-
-class_collection = db_connection.get_collection('class_list') #get class list 
-
-class_option_collection = db_connection.get_collection('class_option') # get collection for class option in our selection
-
-class_login_collection = db_connection.get_collection('member_login') #get collection for login list
 
 
-class_trainor_list = db_connection.get_collection('trainor_list') #get class list 
+
+
+
 
 @app.route('/api/dashboard/',methods=['GET'])
 def dashbard():
     ''''our dash board will show data here'''
+    
+    member_collection = db_connection.get_collection('member_list') # get member list of our member
 
     data_member = member_collection.count_documents({})
     data_renewed_member = member_collection.count_documents({'renewed':True})
@@ -55,7 +52,7 @@ def dashbard():
 
 @app.route('/api/members/list',methods=['GET'])
 def show_member():
-    user = list(member_collection.find({},{'_id':0}))
+    user = list(db_connection.get_collection('member_list').find({},{'_id':0}))
     
     #exclude archive true so we can hide the member pass it to flask so it wont show if we search
     #post_exclude = [archive for archive in user if archive['archive'] != True ]
@@ -65,18 +62,20 @@ def show_member():
 
 @app.route('/api/class/list',methods=['GET'])
 def show_classes():
-    class_list = list(class_collection.find({},{'_id':0}))
+    class_list = list(db_connection.get_collection('class_list') .find({},{'_id':0}))
     return jsonify(class_list),200
 
 @app.route('/api/trainor/list',methods=['GET'])
 def show_trainor_list():
-    trainor_list = list(class_trainor_list.find({},{'_id':0}))
+    trainor_list = list(db_connection.get_collection('trainor_list').find({},{'_id':0}))
     return jsonify(trainor_list),200
 
 @app.route('/api/class/option',methods=['GET'])
 def api_class_option():
-    class_list =list(class_option_collection.find({},{'_id':0}))
+    class_list =list(db_connection.get_collection('class_option').find({},{'_id':0}))
     return jsonify(class_list),200
+
+
 
 
 @app.route('/api/member/login/history', methods=['GET'])
@@ -85,7 +84,7 @@ def api_login_list_history():
         # Query and convert ObjectId to string
         member_login_list = [
             {**doc, "_id": str(doc["_id"]), "member": {**doc["member"], "_id": str(doc["member"]["_id"])}} 
-            for doc in class_login_collection.find({})
+            for doc in  db_connection.get_collection('member_login').find({})
         ]
         return jsonify(member_login_list), 200
     except Exception as e:
