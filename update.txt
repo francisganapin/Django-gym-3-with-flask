@@ -1,5 +1,5 @@
-3/10/2025
-  update
+3/13/2025
+	Add a function in one page in memberlist like register,update,archive,export
 
 3/9/2025
 	update naming scheme of function so it clear

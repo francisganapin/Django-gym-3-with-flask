@@ -62,6 +62,9 @@ class LoginClass:
 
 def member_list_view(request):
 
+    #we use this for register
+    random_id = GlobalFunction.generate_random_id()
+
     api_url_member = 'http://127.0.0.1:5000/api/members/list'
     response = ''
     login_date = MemberClass.today.date()
@@ -104,7 +107,8 @@ def member_list_view(request):
 
     context = {
         'member_list':page_obj,
-        'login_date':login_date
+        'login_date':login_date,
+        'random_id':random_id
     }
     return render(request, 'member/member_list.html', context)
 
@@ -172,6 +176,7 @@ def member_list_view_update(request,member_id,first_name,last_name,expiry):
     return render (request,'member/member_update_list.html',{'member_data':member_data})
 
 
+
 def member_login_view_function(request):
 
     login_date = MemberClass.today
@@ -207,7 +212,7 @@ def member_register_view(request):
         gender = request.POST.get('gender')
         address = request.POST.get('address')
         phone_number = request.POST.get('phone_number')
-        join_date = MemberClass.formatted_date
+        join_date = MemberClass.today
         renewed = True
         
         profile_image_path = MemberClass.upload(request)
@@ -287,6 +292,42 @@ def export_view(request):
     return response
 
 
+
+def register_button(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+
+    api_url_member = 'http://127.0.0.1:5000/api/members/list'
+    response = ''
+
+    response = requests.get(api_url_member)
+    data = response.json()
+    
+
+    response = HttpResponse(
+        content_type="text/csv",
+        headers={"Content-Disposition": 'attachment; filename="somefilename.csv"'},
+    )
+
+    writer = csv.writer(response)
+    writer.writerow(["id_card", "expiry", "first_name", "last_name","gender","phone_number","profile_image","join_date","renewed","archive"])
+    for member in data:
+        writer.writerow([
+            member['id_card'],
+            member['expiry'],
+            member['first_name'],
+            member['last_name'],
+            member['gender'],
+            member['phone_number'],
+            member['profile_image'],
+            member['join_date'],
+            member['renewed'],
+            member['archive']
+        ])
+    
+    return response
+
+
+
 def archive_member_view(request,id_card):
 
     if request.method == 'POST':
@@ -299,3 +340,73 @@ def archive_member_view(request,id_card):
         message = f'Member ID Card was not exist {data}'
         return render(request, 'member/member_list.html',{'message':message})
     
+
+
+
+
+#THIS CODE WILL EDIT OUR EXPIRY IN FRONT END
+def update_member_list_expiry(request,member_id):
+    
+    if request.method == 'POST':
+        id_card = member_id
+        expiry = request.POST.get('expiry')
+        
+        member_data = {
+        'member_id':member_id,
+        'expiry':expiry
+    }
+
+        if not expiry:
+            return HttpResponse("Expiry date is required", status=400)
+
+        queary = { "id_card": { "$regex": id_card } }
+        insert = { "$set":{'expiry':expiry}}
+    try:
+        MemberClass.collection.update_one(queary,insert)
+    except:
+         print('data was not updated')
+    
+    return redirect('member_list_view')
+
+
+
+def register_member_list_view(request):
+    
+
+    if request.method == 'POST':
+        id_card = request.POST.get('id_card')
+        expiry = request.POST.get('expiry')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        gender = request.POST.get('gender')
+        address = request.POST.get('address')
+        phone_number = request.POST.get('phone_number')
+        join_date = MemberClass.today
+        renewed = True
+        
+        profile_image_path = MemberClass.upload(request)
+
+        data = {
+            'id_card':id_card,
+            'expiry':expiry,
+            'first_name':first_name,
+            'last_name':last_name,
+            'gender':gender,
+            'address':address,
+            'phone_number':phone_number,
+            'profile_image':profile_image_path,
+            'join_date':join_date,
+            'renewed':renewed,
+            'archive':False
+        }
+
+        try:
+                MemberClass.collection.insert_one(data)
+                return redirect('member_list_view') # if success it wil lgo to member_list_view
+        
+        except pymongo.errors.DuplicateKeyError:
+                message = f'Member ID Card was already exist {id_card}'
+                return render(request, 'member/member_register.html',{'message':message})
+    
+    return redirect('member_list_view')
+

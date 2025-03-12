@@ -11,5 +11,11 @@ urlpatterns = [
     path('member-register/', views.member_register_view, name='member_register_view'),
     path('member_update_views/',views.member_update_views,name='member_update_views'),
     path('member-list/list/export',views.export_view,name='export_view'),
-    path('member/login/list',views.member_login_list_view,name='member_login_list_view')
+    path('member/login/list',views.member_login_list_view,name='member_login_list_view'),
+
+    # this will update member_expiry on member list
+    path('member/update/<str:member_id>/',views.update_member_list_expiry,name='update_member_list_expiry'),
+
+    #this will register a member inside member_list_view
+    path('register/member/list/view',views.register_member_list_view,name='register_member_list_view')
 ]
