@@ -64,6 +64,7 @@
   <div class="filters">
     <form method="get" action="{% url 'trainor_list_view' %}">
       <input type="text" name="trainer_id" value="{{ request.GET.trainer_id }}" placeholder="Search Card">
+      <input type="text" name="trainor_name" value="{{ request.GET.trainor_name }}" placeholder="Search Name">
       <button type="submit">Search</button>
     </form>
   </div>

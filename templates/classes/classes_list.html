@@ -127,7 +127,25 @@
     
   </div>
 
+  <!-- Pagination -->
+  <div class="pagination">
+    <span class="step-links">
+      {% if member_list.has_previous %}
+        <a href="?page=1&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">&laquo; First</a>
+        <a href="?page={{ member_list.previous_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Previous</a>
+      {% endif %}
 
+      <span class="current">
+        Page {{ member_list.number }} of {{ member_list.paginator.num_pages }}.
+      </span>
+
+      {% if member_list.has_next %}
+        <a href="?page={{ member_list.next_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Next</a>
+        <a href="?page={{ member_list.paginator.num_pages }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+</div>
 
 
 

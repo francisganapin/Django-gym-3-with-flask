@@ -35,17 +35,15 @@ def trainor_list_view(request):
 
 
         trainer_id = request.GET.get('trainer_id')
+        trainor_name = request.GET.get('trainor_name')
         # we use this code to get queary as list on member.get('id_card') we find id card dont add this
-
-        #if queary_card:
-            #posts = [member for member in posts if queary_card in str(member.get('member', {}).get('id_card', ''))]
-          
-        
-        #if queary_gender:
-            #posts = [member for member in posts if queary_gender in str(member.get('gender', {}).get('gender',''))]
             
         if trainer_id:
             posts = [member for member in posts if trainer_id in str(member.get('trainer_id', ''))]
+        
+        # search name of member
+        if trainor_name:
+            posts = [member for member in posts if trainor_name in str(member.get('first_name', '') + member.get('last_name', ''))]
 
         paginator = Paginator(posts,10)
         page_number = request.GET.get('page')

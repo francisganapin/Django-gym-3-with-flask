@@ -5,6 +5,7 @@
 {% block content %}
 
 <body>
+    <div id="clearText">
     {% if member %}
         <h1>Member Details</h1>
         <p>ID Card: {{ member.id_card }}</p>
@@ -12,15 +13,25 @@
         <!-- Add more member details here -->
     {% elif error %}
         <p>{{ error }}</p>
-    {% else %}
-        <form method="POST">
-            {% csrf_token %}
-            <label for="id_card">ID Card:</label>
-            <input type="text" id="id_card" name="id_card" required>
-            <button type="submit">Submit</button>
-        </form>
     {% endif %}
+</div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="id_card">ID Card:</label>
+        <input type="text" id="id_card" name="id_card" required>
+        <button type="submit">Submit</button>
+    </form>
+
 </body>
 
+<script>
+    function clearText(){
+        document.getElementById('clearText').innerHTML = '';
+    }
+
+    // Set a timer to clear the text after 3 seconds (3000 milliseconds)
+    setTimeout(clearText, 15000);
+</script>
 
 {% endblock %}

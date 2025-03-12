@@ -1,3 +1,9 @@
+3/10/2025
+  update
+
+3/9/2025
+	update naming scheme of function so it clear
+
 3-1-2025
 	update the register class for now 
 
