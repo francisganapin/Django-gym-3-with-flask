@@ -144,8 +144,56 @@ button.btn-secondary:hover {
 .padding-left-button {
   padding-left: 10px;
 }
-</style>
 
+</style>
+<!-- card style-->
+<style>
+  .card {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      max-width: 500px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      background: #fff;
+  }
+  
+  .card img {
+      width: 150px;
+      height: auto;
+      object-fit: cover;
+  }
+  
+  .card-body {
+      padding: 15px;
+      flex: 1;
+  }
+  
+  .card-title {
+      font-size: 18px;
+      margin: 0 0 5px;
+  }
+  
+  .card-text {
+      font-size: 14px;
+      color: #666;
+  }
+  
+  .card-button {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+  }
+  
+  .card-button:hover {
+      background: #0056b3;
+  }
+</style>
 
 <div class="content">
   <div class="header">
@@ -156,7 +204,8 @@ button.btn-secondary:hover {
   <div class="filters">
 
     <form method="get" action="{% url 'member_list_view' %}">
-      <input type="text" name="id_card" value="{{ request.GET.id_card }}" placeholder="🔍 Search Card">
+      <input type="text" name="id_card" value="{{ request.GET.id_card }}" placeholder="Search Card">
+      <input type="text" name="query_name" value="{{ request.GET.query_name }}" placeholder="Name">
       <select name="gender">
         <option value="">All Genders</option>
         <option value="Male" {% if request.GET.gender == "Male" %}selected{% endif %}>Male</option>
@@ -280,6 +329,7 @@ button.btn-secondary:hover {
           <th>Renewed</th>
           <th>Update</th>
           <th>Archive</th>
+          <th>Get ID</th>
         </tr>
       </thead>
       <tbody>
@@ -352,6 +402,7 @@ button.btn-secondary:hover {
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
                     <form action="{% url 'archive_member_view' item.id_card %}" method="post">
                       {% csrf_token %}
                       <button type="submit" class="btn btn-danger">Yes, Archive</button>
@@ -362,8 +413,43 @@ button.btn-secondary:hover {
             </div>
           </td>
 
+          <td>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modal-getID">Id</button>
+            <div class="modal fade" id="modal-getID" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Get ID</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                  
+                    <div class="card">
+                      <img src="https://via.placeholder.com/150" alt="Card image">
+                      <div class="card-body">
+                          <h2 class="card-title">{{ item.id_card }}</h2>
+                          <p class="card-text">
+                            {{ item.first_name }} {{ item.last_name }}
+                          </p>
+                          <a>{{ item.address }}</a>
+                      </div>
+                  </div>
+                    
+           
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 
-  
+                    <form action="" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-danger">Print</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          
         </tr>
         {% endfor %}
       </tbody>

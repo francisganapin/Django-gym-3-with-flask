@@ -82,17 +82,22 @@ def member_list_view(request):
         #exclude archive true so we can hide the member pass it to flask so it wont show if we search
         post_exclude = [archive for archive in posts if archive['archive'] != True ]
 
-        queary_card = request.GET.get('id_card')
-        queary_gender = request.GET.get('gender')
+        query_card = request.GET.get('id_card')
+        query_gender = request.GET.get('gender')
+        query_name = request.GET.get('query_name')
+        
         # we use this code to get queary as list on member.get('id_card') we find id card
-        if queary_card:
-            post_exclude = [member for member in posts if queary_card in str(member.get('id_card', ''))]
+        if query_card:
+            post_exclude = [member for member in posts if query_card in str(member.get('id_card', ''))]
             if not post_exclude:
                 post_exclude = [MemberClass.no_data]
         
-        if queary_gender:
-            post_exclude = [member for member in posts if queary_gender in str(member.get('gender',''))]
+        # query gender so we can search them
+        if query_gender :
+            post_exclude = [member for member in posts if query_gender  in str(member.get('gender',''))]
 
+        if query_name:
+            post_exclude = [member for member in posts if query_name in str(member.get('first_name','')+ '' + member.get('last_name',''))]
 
         paginator = Paginator(post_exclude,10)
         page_number = request.GET.get('page')
