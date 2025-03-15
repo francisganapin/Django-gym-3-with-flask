@@ -19,30 +19,39 @@ db_connection = ConnectionMongoDB()
 def dashbard():
     ''''our dash board will show data here'''
     
+   
     member_collection = db_connection.get_collection('member_list') # get member list of our member
-
+    
+    trainor_list = list(db_connection.get_collection('trainor_list').find({},{'_id':0}))
+    class_list = list(db_connection.get_collection('class_option').find({},{'_id':0}))
     data_member = member_collection.count_documents({})
     data_renewed_member = member_collection.count_documents({'renewed':True})
 
-    
-    
+    class_count = len(class_list)
+    trainor_count = len(trainor_list)
+    print(trainor_count)
 
     date_now = datetime.now().strftime("%Y-%m-%d") # date now 
 
     data_member_expiry = list(member_collection.find({}, {'expiry': 1, '_id': 0}))
+   
+
     expired_member = [member['expiry']  <= date_now for member in data_member_expiry if member['expiry'] is not None] # list the expired data  base on date
     count_expired  = expired_member.count(1) # this will count true
     count_active   = expired_member.count(0) # this will count false
+   
 
-    print(f'there is a {count_expired} member that expired today')
-    print(expired_member)
-    print(date_now)
+    #print(f'there is a {count_expired} member that expired today')
+    #print(expired_member)
+    #print(date_now)
  
     context = {'data_member':data_member,
                     'data_renewed_member':data_renewed_member,
                     'date_now':date_now,
                     'active_member_count':count_active,
-                    'expired_member_count':count_expired
+                    'expired_member_count':count_expired,
+                    'trainor_count':trainor_count,
+                    'class_count':class_count
                     }
     
     return jsonify(context),200
