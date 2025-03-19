@@ -34,8 +34,8 @@ def trainor_list_view(request):
         posts = response.json() if isinstance(response.json(),list) else []
 
 
-        trainer_id = request.GET.get('trainer_id')
-        trainor_name = request.GET.get('trainor_name')
+        trainer_id = request.GET.get('id_card')
+        trainor_name = request.GET.get('query_name')
         # we use this code to get queary as list on member.get('id_card') we find id card dont add this
             
         if trainer_id:

@@ -28,12 +28,28 @@ def class_list_view(request):
         response = requests.get(api_url_class)
         response.raise_for_status()
         classes_data = response.json()
+
+        class_id = request.GET.get('id_card')
+        class_name = request.GET.get('query_name')
+
+        if class_id:
+            classes_data = [x for x in classes_data if class_id in str(x.get('class_id_card',''))]
+
+        if class_name:
+            classes_data = [x for x in classes_data if class_name in str(x.get('name',''))]
+
+        paginator = Paginator(classes_data,5)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+
+
     except Exception as e:
         print(f"error: {e}")
         return render(request, 'error.html')
 
     context ={
-        'classes_data':classes_data
+        'classes_data':page_obj
     }
     return render(request,'classes/classes_list.html',context)
 
@@ -84,8 +100,6 @@ def class_register_view(request):
         instructor = request.POST.get('instructor')
         duration = request.POST.get('duration')
         schedule = request.POST.get('schedule')
-
-        
 
         data = {
             "name": name,

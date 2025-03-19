@@ -81,6 +81,9 @@ def member_list_view(request):
 
         #exclude archive true so we can hide the member pass it to flask so it wont show if we search
         post_exclude = [archive for archive in posts if archive['archive'] != True ]
+        
+        #post_exclude = any(posts) this one doesnt work
+        print(post_exclude)
 
         query_card = request.GET.get('id_card')
         query_gender = request.GET.get('gender')
@@ -108,7 +111,7 @@ def member_list_view(request):
         print(f"sorry your api provider was not working this time")
         return render(request,'error.html')
  
-    print(post_exclude)
+    #print(post_exclude)
 
     context = {
         'member_list':page_obj,
@@ -117,7 +120,7 @@ def member_list_view(request):
     }
     return render(request, 'member/member_list.html', context)
 
-
+# function num 0
 def member_login_list_view(request):
     api_url_data = 'http://127.0.0.1:5000/api/member/login/history'
     response = ''
@@ -366,6 +369,7 @@ def update_member_list_expiry(request,member_id):
 
         queary = { "id_card": { "$regex": id_card } }
         insert = { "$set":{'expiry':expiry}}
+        print(member_data)
     try:
         MemberClass.collection.update_one(queary,insert)
     except:
