@@ -39,11 +39,11 @@ def trainor_list_view(request):
         # we use this code to get queary as list on member.get('id_card') we find id card dont add this
             
         if trainer_id:
-            posts = [member for member in posts if trainer_id in str(member.get('trainer_id', ''))]
+            posts = [member for member in posts if trainer_id.lower() in str(member.get('trainer_id', ''))]
         
         # search name of member
         if trainor_name:
-            posts = [member for member in posts if trainor_name in str(member.get('first_name', '') + member.get('last_name', ''))]
+            posts = [member for member in posts if trainor_name.lower() in str(member.get('first_name', '') + member.get('last_name', '')).lower()]
 
         paginator = Paginator(posts,10)
         page_number = request.GET.get('page')

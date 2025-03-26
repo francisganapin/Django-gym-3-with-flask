@@ -100,7 +100,10 @@ def member_list_view(request):
             post_exclude = [member for member in posts if query_gender  in str(member.get('gender',''))]
 
         if query_name:
-            post_exclude = [member for member in posts if query_name in str(member.get('first_name','')+ '' + member.get('last_name',''))]
+            post_exclude = [
+                member for member in posts 
+                if query_name.lower() in (member.get('first_name', '') + ' ' + member.get('last_name', '')).lower()
+            ]
 
         paginator = Paginator(post_exclude,10)
         page_number = request.GET.get('page')
@@ -131,22 +134,17 @@ def member_login_list_view(request):
 
 
         query_card = request.GET.get('id_card')
-        query_gender = request.GET.get('gender')
+        query_name = request.GET.get('query_name')
+
 
         # we use this code to get queary as list on member.get('id_card') we find id card dont add this
 
-        #if queary_card:
-            #posts = [member for member in posts if queary_card in str(member.get('member', {}).get('id_card', ''))]
-          
-        
-        #if queary_gender:
-            #posts = [member for member in posts if queary_gender in str(member.get('gender', {}).get('gender',''))]
-            
         if query_card:
-            posts = [member for member in posts if query_card in str(member.get('member', {}).get('id_card', ''))]
+            posts = [member for member in posts if query_card.lower() in str(member.get('member', {}).get('id_card', '')).lower()]
         
-        if query_gender:
-            posts = [member for member in posts if query_gender in str(member.get('member', {}).get('gender', ''))]
+        if query_name:
+            posts = [member for member in posts if query_name.lower() in str(member.get('member', {}).get('last_name', '')+""+ member.get('member', {}).get('first_name', '')).lower()]
+
 
         paginator = Paginator(posts,10)
         page_number = request.GET.get('page')
@@ -186,6 +184,7 @@ def member_list_view_update(request,member_id,first_name,last_name,expiry):
 
 
 def member_login_view_function(request):
+    """this will be login  for our member"""
 
     login_date = MemberClass.today
     context = {}

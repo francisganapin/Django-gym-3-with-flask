@@ -36,7 +36,7 @@ def class_list_view(request):
             classes_data = [x for x in classes_data if class_id in str(x.get('class_id_card',''))]
 
         if class_name:
-            classes_data = [x for x in classes_data if class_name in str(x.get('name',''))]
+            classes_data = [x for x in classes_data if class_name.lower() in str(x.get('name','')).lower()]
 
         paginator = Paginator(classes_data,5)
         page_number = request.GET.get('page')

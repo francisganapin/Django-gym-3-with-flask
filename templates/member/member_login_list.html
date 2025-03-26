@@ -4,117 +4,226 @@
 
 {% block content %}
 
+
 <style>
-    #table-wrapper {
-      position: relative;
-    }
-    #table-scroll {
-      height: 600px;
-      overflow: auto;
-      margin-top: 20px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-    #table-wrapper table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 10px;
-      border: 1px solid #ddd;
-      text-align: left;
-    }
-    th {
-      background: #e5e7eb;
-      position: sticky;
-      top: 0;
-      z-index: 2;
-    }
-    .filters {
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+/* Table Styles */
+#table-wrapper {
+  position: relative;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#table-scroll {
+  height: 600px;
+  overflow-y: auto;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+#memberTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background: #007bff;
+  color: white;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/* Alternating Row Colors */
+tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+tbody tr:hover {
+  background: #dfe6e9;
+}
+
+/* Filters & Pagination */
+.filters {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.filters input,
+.filters select,
+.filters button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.pagination {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pagination a {
+  padding: 8px 12px;
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 0 5px;
+}
+
+.pagination a:hover {
+  background: #0056b3;
+}
+
+/* Expiry Color Logic */
+.expiry-date {
+  font-weight: bold;
+}
+
+.expiry-date.red {
+  color: red;
+}
+
+.expiry-date.green {
+  color: green;
+}
+
+/* Buttons */
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.btn-primary {
+  background: #007bff;
+  color: white;
+}
+
+button.btn-primary:hover {
+  background: #0056b3;
+}
+
+button.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+button.btn-secondary:hover {
+  background: #5a6268;
+}
+ .pagination_center{
+  display:center;
+ }
+
+ .padding-left {
+  padding-left: 300px;
+} 
+.padding-left-button {
+  padding-left: 10px;
+}
+
+</style>
+<!-- card style-->
+<style>
+  .card {
       display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .filters input, .filters select, .filters button {
-      padding: 8px;
-      border: 1px solid #ccc;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      max-width: 500px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      background: #fff;
+  }
+  
+  .card img {
+      width: 150px;
+      height: auto;
+      object-fit: cover;
+  }
+  
+  .card-body {
+      padding: 15px;
+      flex: 1;
+  }
+  
+  .card-title {
+      font-size: 18px;
+      margin: 0 0 5px;
+  }
+  
+  .card-text {
+      font-size: 14px;
+      color: #666;
+  }
+  
+  .card-button {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
       border-radius: 5px;
-    }
+      font-size: 14px;
+  }
   
-    /* color logic for expiry*/
-    .red{
-      color:red;
-    }
-    .green{
-      color:green;
-    }
-  
-  
-  </style>
-  
-  
-  <!-- Main Content -->
-  <div class="content">
-    <div class="header">
-      <h1>Member List</h1>
-    </div>
-  
-    <!-- Filters -->
-    <div class="filters">
-      <form method="get" action="{% url 'member_login_list_view' %}">
-        <input type="text" name="id_card" value="{{ request.GET.id_card }}" placeholder="Search Card">
-        <select name="gender">
-          <option value="">All Genders</option>
-          <option value="Male" {% if request.GET.gender == "Male" %}selected{% endif %}>Male</option>
-          <option value="Female" {% if request.GET.gender == "Female" %}selected{% endif %}>Female</option>
-        </select>
-        <button type="submit">Search</button>
-      </form>
-      <form method="get" action="{% url 'export_view' %}">
-        <button type="submit">Export</button>
-      </form>
-    </div>
-  
-    <!-- Table -->
-    <div id="table-wrapper">
-      <div id="table-scroll">
-        <div class="table-container">
-          <table id="memberTable">
-            <thead>
-              <tr>
-                
-                <th>Login Date</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Gender</th>
-                <th>ID Card</th>
+  .card-button:hover {
+      background: #0056b3;
+  }
+</style>
 
-              </tr>
-            </thead>
-            <tbody>
-                {% for item in login_detail %}
+<div class="content">
+  <div class="header">
+    <h1>Login History List</h1>
+  </div>
 
-<tr>            
-                <td>{{item.login_date}}</td>
-                <td>{{item.member.first_name}}</td>
-                <td>{{item.member.last_name}}</td>
-                <td>{{item.member.gender}}</td>
-                <td>{{item.member.id_card}}</td>
-</tr>
-                {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      
-    </div>
-  
-    <!-- Pagination -->
+  <!-- Filters -->
+  <div class="filters">
+
+    <form method="get" action="{% url 'member_login_list_view' %}">
+      <input type="text" name="id_card" value="{{ request.GET.id_card }}" placeholder="Card">
+      <input type="text" name="query_name" value="{{ request.GET.query_name }}" placeholder="Name">
+
+      <button class="btn btn-primary" type="submit">🔎 Search</button>
+    </form>
+
+
+
+  <div class="padding-left-button">
+
+  </div>
+
+  <!-- Pagination -->
+  <div class="padding-left">
+  <div class="pagination_center">
     <div class="pagination">
       <span class="step-links">
         {% if login_detail.has_previous %}
-          <a href="?page=1&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">&laquo; First</a>
-          <a href="?page={{ login_detail.previous_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Previous</a>
+          <a href="?page=1&id_card={{ request.GET.id_card }}&name={{ request.GET.query_name }}">&laquo; First</a>
+          <a href="?page={{ login_detail.previous_page_number }}&id_card={{ request.GET.id_card }}&name={{ request.GET.query_name }}">⬅️ Previous</a>
         {% endif %}
   
         <span class="current">
@@ -122,11 +231,61 @@
         </span>
   
         {% if login_detail.has_next %}
-          <a href="?page={{ login_detail.next_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Next</a>
-          <a href="?page={{ login_detail.paginator.num_pages }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Last &raquo;</a>
+          <a href="?page={{ login_detail.next_page_number }}&id_card={{ request.GET.id_card }}&name={{ request.GET.query_name }}">Next ➡️</a>
+          <a href="?page={{ login_detail.paginator.num_pages }}&id_card={{ request.GET.id_card }}&name={{ request.GET.query_name }}">Last &raquo;</a>
         {% endif %}
       </span>
     </div>
+    </div>
+</div>
+  </div>
+  
   </div>
 
+<!-- Table -->
+<div id="table-wrapper">
+  <div id="table-scroll">
+    <table id="memberTable">
+      <thead>
+          	<tr>
+             
+              <th>Login Date</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Gender</th>
+              <th>ID Card</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in login_detail %}
+
+            <tr>            
+                            <td>{{item.login_date}}</td>
+                            <td>{{item.member.first_name}}</td>
+                            <td>{{item.member.last_name}}</td>
+                            <td>{{item.member.gender}}</td>
+                            <td>{{item.member.id_card}}</td>
+            </tr>
+                            {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+<script>
+  $('#exampleModal').on('shown.bs.modal', function () {
+    $('#myInput').trigger('focus')
+  })
+</script>
+
+
+
+
+  
 {% endblock %}
+
+

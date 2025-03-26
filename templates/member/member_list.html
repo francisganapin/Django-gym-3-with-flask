@@ -324,7 +324,6 @@ button.btn-secondary:hover {
           <th>Gender</th>
           <th>Join Date</th>
           <th>Phone</th>
-          <th>Renewed</th>
           <th>Update</th>
           <th>Archive</th>
           <th>Get ID</th>
@@ -336,14 +335,14 @@ button.btn-secondary:hover {
           <td>{{ forloop.counter }}</td>
           <td>{{ item.id_card }}</td>
           <td>{{ item.first_name }}</td>
-          <td>{{ item.address }}</td>
+          <td>{{ item.last_name }}</td>
           <td class="expiry-date {% if item.expiry|date:"Y-m-d" < today|date:"Y-m-d" %}red{% else %}green{% endif %}">
             <strong>{{ item.expiry }}</strong>
           </td>
           <td>{{ item.gender }}</td>
           <td>{{ item.join_date }}</td>
           <td>{{ item.phone_number }}</td>
-          <td>{{ item.renewed }}</td>
+   
           
 
 
