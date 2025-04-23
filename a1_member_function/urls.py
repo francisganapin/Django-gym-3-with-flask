@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
 from . import views  # Adjust this to import your views correctly
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('member-list/', views.member_list_view, name='member_list_view'),
@@ -18,4 +19,10 @@ urlpatterns = [
 
     #this will register a member inside member_list_view
     path('register/member/list/view',views.register_member_list_view,name='register_member_list_view')
-]
+] 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+

@@ -23,5 +23,6 @@ urlpatterns = [
     path('',include('a1_member_function.urls')),
     path('',include('a1_classes_function.urls')),
     path('',include('a1_trainor_function.urls')),
-    path('',include('a1_dashboard.urls'))
+    path('',include('a1_dashboard.urls')),
+    path('',include('a1_income_function.urls'))
 ]

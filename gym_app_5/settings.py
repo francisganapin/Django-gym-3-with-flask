@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'a1_trainor_function',
     'a1_member_function',
     'a1_dashboard',
+    'a1_income_function',
     'csv_export', # export our data
 
 ]

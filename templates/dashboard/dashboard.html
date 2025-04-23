@@ -183,14 +183,15 @@
         <h2>{{ response.data_member }}</h2>
       </div>
       <div class="card card-earnings">
-        <div>Expired Member</div>
-        <h2>{{response.expired_member_count}}</h2>
-      </div>
-      <div class="card card-announcements">
-        <div>Renewed total</div>
+        <div>Renewed Member</div>
         <h2>{{ response.data_renewed_member }}</h2>
       </div>
+      <div class="card card-announcements">
+        <div>Expired total</div>
+        <h2>{{response.expired_member_count}}</h2>
+      </div>
     </div>
+
 
     <!-- Chart + Stats Row -->
     <div class="main-content">
@@ -202,34 +203,15 @@
         </div>
       </div>
 
-      <!-- Right: Stats Boxes -->
-      <div class="stats-container">
-        <div class="stat-box">
-          <h4>Number of Trainor</h4>
-          <p>{{ response.trainor_count }}</p>
-        </div>
-        <div class="stat-box">
-          <h4>Class Available</h4>
-          <p>{{response.class_count }}</p>
-        </div>
-        <div class="stat-box">
-          <h4>Available Equipment</h4>
-          <p>6</p>
-        </div>
-        <div class="stat-box">
-          <h4>Total Expenses</h4>
-          <p>$860</p>
-        </div>
-        <div class="stat-box">
-          <h4>Active Gym Trainers</h4>
-          <p>2</p>
-        </div>
-        <div class="stat-box">
-          <h4>Present Members</h4>
-          <p>2</p>
-        </div>
-      </div>
+
+    
     </div>
+
+
+    
+
+
+
   </div>
 </div>
 

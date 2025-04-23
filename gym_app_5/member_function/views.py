@@ -1,6 +1,8 @@
 from django.shortcuts import render
 import requests
 import json
+
+
 def gym_member_list(request):
 
     response = request.get('http://127.0.0.1:5000/api/members/2')
