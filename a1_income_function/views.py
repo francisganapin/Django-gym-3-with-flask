@@ -16,7 +16,7 @@ def payment_members_views(request):
         amount = request.POST.get('amount')
         payment_date = datetime.datetime.now()
         status = request.POST.get('status')
-        receipt_number = request.POST.get('reciept_numb')
+        receipt_number = request.POST.get('receipt_number')
 
         data = {
             'member_id':member_id,

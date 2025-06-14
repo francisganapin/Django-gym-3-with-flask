@@ -4,33 +4,100 @@
 
 {% block content %}
 
-<body>
-    <div id="clearText">
-    {% if member %}
-        <h1>Member Details</h1>
-        <p>ID Card: {{ member.id_card }}</p>
-        <p>Name: {{ member.first_name }} {{ member.last_name }}</p>
-        <!-- Add more member details here -->
-    {% elif error %}
-        <p>{{ error }}</p>
+<style>
+ 
+    .container_div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh; /* Full screen height */
+        flex-direction: column;
+    }
+
+    .message_box {
+        background-color: #ffffff;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        text-align: center;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .login_form {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .login_form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .login_form input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .login_form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .login_form button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<div class="container_div">
+
+    {% if member or error %}
+        <div class="message_box" id="clearText">
+            {% if member %}
+                <h2>Member Details</h2>
+                <p><strong>ID Card:</strong> {{ member.id_card }}</p>
+                <p><strong>Name:</strong> {{ member.first_name }} {{ member.last_name }}</p>
+            {% elif error %}
+                <p>{{ error }}</p>
+            {% endif %}
+        </div>
     {% endif %}
+
+    <div class="login_form">
+        <form method="POST">
+            {% csrf_token %}
+            <label for="id_card">ID Card:</label>
+            <input type="text" id="id_card" name="id_card" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
 </div>
-
-    <form method="POST">
-        {% csrf_token %}
-        <label for="id_card">ID Card:</label>
-        <input type="text" id="id_card" name="id_card" required>
-        <button type="submit">Submit</button>
-    </form>
-
-</body>
 
 <script>
     function clearText(){
-        document.getElementById('clearText').innerHTML = '';
+        const box = document.getElementById('clearText');
+        if (box) {
+            box.remove();
+        }
     }
-
-    // Set a timer to clear the text after 3 seconds (3000 milliseconds)
     setTimeout(clearText, 15000);
 </script>
 

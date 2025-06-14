@@ -33,7 +33,10 @@ class MemberClass:
             'renewed': 'No data'
             }
 
+
+    #use this to clean the data when register
     today = datetime.now()
+    formatted_date = today.strftime('%Y-%m-%d')
   
 
      # Connect to MongoDB
@@ -221,7 +224,12 @@ def member_register_view(request):
         phone_number = request.POST.get('phone_number')
         join_date = MemberClass.today
         renewed = True
-        
+
+        #14/06/2025 we add this to sure first number input was 63
+        phone_start = '63'
+        complete_phone_number = phone_start + phone_number
+
+
         profile_image_path = MemberClass.upload(request)
         data = {
             'id_card':id_card,
@@ -230,7 +238,7 @@ def member_register_view(request):
             'last_name':last_name,
             'gender':gender,
             'address':address,
-            'phone_number':phone_number,
+            'phone_number':complete_phone_number,
             'profile_image':profile_image_path,
             'join_date':join_date,
             'renewed':renewed,
@@ -380,6 +388,7 @@ def update_member_list_expiry(request,member_id):
 
 def register_member_list_view(request):
     
+ 
 
     if request.method == 'POST':
         id_card = request.POST.get('id_card')
@@ -389,10 +398,15 @@ def register_member_list_view(request):
         gender = request.POST.get('gender')
         address = request.POST.get('address')
         phone_number = request.POST.get('phone_number')
-        join_date = MemberClass.today
+        join_date = MemberClass.formatted_date
         renewed = True
+
         
         profile_image_path = MemberClass.upload(request)
+
+        #14/06/2025 we add this to sure first number input was 63
+        phone_start = '63'
+        complete_phone_number = phone_start +  phone_number
 
         data = {
             'id_card':id_card,
@@ -401,7 +415,7 @@ def register_member_list_view(request):
             'last_name':last_name,
             'gender':gender,
             'address':address,
-            'phone_number':phone_number,
+            'phone_number':complete_phone_number,
             'profile_image':profile_image_path,
             'join_date':join_date,
             'renewed':renewed,

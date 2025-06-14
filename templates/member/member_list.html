@@ -265,8 +265,14 @@ button.btn-secondary:hover {
                     <input type="text" id="address" name="address" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="phone_number">Phone Number:</label>
-                    <input type="tel" id="phone_number" name="phone_number" class="form-control" required>
+                  
+              
+                  <label>Phone Number:</label>
+                  <div style="display: flex;">
+                      <input type="text" value="+63" disabled style="width:50px;" readonly>
+                      <input type="text" id="phone_number" name="phone_number" maxlength="10" required pattern="[0-9]+">
+                  </div>
+  
                 </div>
                 <div class="form-group">
                     <label for="profile_image">Profile Image:</label>
@@ -526,6 +532,8 @@ button.btn-secondary:hover {
   }
 </script>
 
+<!-- we use this script for our qr--> <!--- fox this later on please-->
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
   
     {% endblock %}
 

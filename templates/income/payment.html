@@ -5,4 +5,12 @@
 {% block content %}
 
 <p>PAYMENT</p>
+<form action="{% url 'payment_function' %}" method="POST">
+    {% csrf_token %}
+    <input name="member_id" required placeholder="Member ID">
+    <input name="amount" required type="number" step="0.01" placeholder="Amount">
+    <input name="status" required placeholder="Payment Status">
+    <input name="receipt_number" required placeholder="Receipt Number">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
 {% endblock %}
