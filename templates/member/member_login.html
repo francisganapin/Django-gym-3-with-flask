@@ -64,6 +64,9 @@
     .login_form button:hover {
         background-color: #45a049;
     }
+    img {
+    border-radius: 50%;
+    }
 </style>
 
 <div class="container_div">
@@ -72,8 +75,14 @@
         <div class="message_box" id="clearText">
             {% if member %}
                 <h2>Member Details</h2>
+                
+                <img src="http://127.0.0.1:8000/media/{{ member.profile_image}}" alt="Avatar" style="width:200px">
+
+            <div style="margin-top:20px;">
                 <p><strong>ID Card:</strong> {{ member.id_card }}</p>
+
                 <p><strong>Name:</strong> {{ member.first_name }} {{ member.last_name }}</p>
+            </div>
             {% elif error %}
                 <p>{{ error }}</p>
             {% endif %}

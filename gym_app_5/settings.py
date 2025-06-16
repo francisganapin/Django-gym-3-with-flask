@@ -59,8 +59,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "gym_app_5.urls"
 
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'  # Replace BASE_DIR with your project root
+
+
+
 
 
 

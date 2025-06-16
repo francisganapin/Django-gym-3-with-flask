@@ -20,9 +20,7 @@ urlpatterns = [
     #this will register a member inside member_list_view
     path('register/member/list/view',views.register_member_list_view,name='register_member_list_view')
 ] 
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-
 

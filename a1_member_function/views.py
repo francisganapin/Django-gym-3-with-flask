@@ -48,13 +48,16 @@ class MemberClass:
     collection.create_index([('id_card', pymongo.ASCENDING)], unique=True)
 
     # this code is for profile image request it will save on our destination
+    #this was fix on the date 16/06/2025
     def upload(request):
         folder = 'media/image'
-        if request.method == 'POST' and request.FILES['profile_image']:
+        if request.method == 'POST' and request.FILES.get('profile_image'):
             myfile = request.FILES['profile_image']
             fs = FileSystemStorage(location=folder)
             filename = fs.save(myfile.name,myfile)
             print(filename)
+            return folder + '/' + filename
+        return None
 
 class LoginClass:
     # Connect to MongoDB
@@ -230,7 +233,7 @@ def member_register_view(request):
         complete_phone_number = phone_start + phone_number
 
 
-        profile_image_path = MemberClass.upload(request)
+        profile_image_path = MemberClass.upload()
         data = {
             'id_card':id_card,
             'expiry':expiry,

@@ -6,7 +6,7 @@ class GlobalFunction:
         so we wont repeat our selves
     
     '''
-    def generate_random_id(length=8):
-        length = 8
+    def generate_random_id(length=6):
+        length = 6
         random_string = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(length))
         return ''.join(random_string)
