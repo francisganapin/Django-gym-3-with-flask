@@ -83,20 +83,26 @@ def api_class_option():
     class_list =list(db_connection.get_collection('class_option').find({},{'_id':0}))
     return jsonify(class_list),200
 
-
+ 
 
 
 @app.route('/api/member/login/history', methods=['GET'])
 def api_login_list_history():
     try:
-        # Query and convert ObjectId to string
+
+        #sort last login on our collection login
+        last_login_doc = db_connection.get_collection('member_login').find().sort('login_date', -1)
+
+        # Convert ObjectIds to strings and prepare response
         member_login_list = [
             {**doc, "_id": str(doc["_id"]), "member": {**doc["member"], "_id": str(doc["member"]["_id"])}} 
-            for doc in  db_connection.get_collection('member_login').find({})
+            for doc in last_login_doc
         ]
+
         return jsonify(member_login_list), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 
+        return jsonify({"error": str(e)}), 500
+
 
 
 if __name__ == '__main__':

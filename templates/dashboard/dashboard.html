@@ -5,31 +5,30 @@
 {% block content %}
 
 <style>
-  /* Wrap everything in #gym-dashboard to avoid global conflicts */
-#gym-dashboard * {
+  /* Reset and base styles */
+  #gym-dashboard * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-  
+
   #gym-dashboard {
     font-family: Arial, sans-serif;
-    background: #ffd7b5
+    background: #ffd7b5;
+    padding: 20px 10px;
   }
-  
-  #gym-dashboard .container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 0 20px;
-  }
-  
 
-  #gym-dashboard h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    text-align: center;
+  #gym-dashboard .dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
   }
-  
+
+  #gym-dashboard h1, #gym-dashboard h3 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
   /* Top Cards Row */
   #gym-dashboard .cards-row {
     display: flex;
@@ -37,10 +36,9 @@
     gap: 10px;
     margin-bottom: 20px;
   }
-  
+
   #gym-dashboard .card {
-    flex: 1;
-    min-width: 220px;
+    flex: 1 1 220px;
     background-color: #eee;
     padding: 20px;
     border-radius: 5px;
@@ -48,50 +46,46 @@
     color: #fff;
     font-weight: bold;
   }
-  
-  /* Example color styles for each card */
-  #gym-dashboard .card-active {
-    background-color: #007bff; /* Blue */
-  }
-  #gym-dashboard .card-registered {
-    background-color: #28a745; /* Green */
-  }
-  #gym-dashboard .card-earnings {
-    background-color: #ffc107; /* Yellow */
-    color: #000;
-  }
-  #gym-dashboard .card-announcements {
-    background-color: #dc3545; /* Red */
-  }
-  
+
   #gym-dashboard .card h2 {
     font-size: 2em;
     margin-top: 10px;
   }
-  
+
+  /* Card Colors */
+  #gym-dashboard .card-active {
+    background-color: #007bff;
+  }
+
+  #gym-dashboard .card-registered {
+    background-color: #28a745;
+  }
+
+  #gym-dashboard .card-earnings {
+    background-color: #ffc107;
+    color: #000;
+  }
+
+  #gym-dashboard .card-announcements {
+    background-color: #dc3545;
+  }
+
   /* Main Content Row (Chart + Stats) */
   #gym-dashboard .main-content {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
   }
-  
-  /* Left side: Chart container */
+
+  /* Chart Container */
   #gym-dashboard .chart-container {
     flex: 2;
-    min-width: 400px;
+    min-width: 300px;
     background-color: #fff;
     border-radius: 5px;
     padding: 20px;
   }
-  
-  #gym-dashboard .chart-container h3 {
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: #333;
-  }
-  
-  /* Placeholder for chart */
+
   #gym-dashboard .chart-placeholder {
     width: 100%;
     height: 200px;
@@ -103,8 +97,8 @@
     font-size: 14px;
     border-radius: 5px;
   }
-  
-  /* Right side: Stats boxes */
+
+  /* Stats Box (if needed in the future) */
   #gym-dashboard .stats-container {
     flex: 1;
     min-width: 250px;
@@ -112,7 +106,7 @@
     flex-wrap: wrap;
     gap: 10px;
   }
-  
+
   #gym-dashboard .stat-box {
     flex: 1 1 48%;
     background-color: #eee;
@@ -121,57 +115,53 @@
     text-align: center;
     color: #333;
   }
-  
+
   #gym-dashboard .stat-box h4 {
-    margin-bottom: 5px;
     font-size: 14px;
   }
-  
+
   #gym-dashboard .stat-box p {
     font-size: 18px;
     font-weight: bold;
-    margin-top: 5px;
-  }
-    /* Wrap everything in #gym-dashboard to avoid global conflicts */
-  #gym-dashboard * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
   }
 
-  #gym-dashboard {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-  }
-
-  /* Use a unique class to avoid conflicts with base .container */
-  #gym-dashboard .dashboard-container {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 20px;
-}
-
-/* ... rest of your dashboard CSS ... */
-
-  /* Responsive adjustments */
+  /* Responsive Layout */
   @media (max-width: 768px) {
+    #gym-dashboard .cards-row,
     #gym-dashboard .main-content {
       flex-direction: column;
     }
-    #gym-dashboard .chart-container, 
-    #gym-dashboard .stats-container {
+
+    #gym-dashboard .card,
+    #gym-dashboard .chart-container {
       flex: 1 1 100%;
+      min-width: auto;
+    }
+
+    #gym-dashboard .chart-placeholder {
+      height: 250px;
+    }
+
+    #gym-dashboard .stats-container {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    #gym-dashboard .stat-box {
+      flex: 1 1 48%;
+    }
+    #gym-dashboard .chart-container {
+      display: none;
     }
   }
-  
 </style>
-
 
 
 <div id="gym-dashboard">
   <div class="dashboard-container">
+  <div style="margin-bottom:20px;">
     <h3>Dashboard</h3>
-
+  </div>
     <!-- Top Cards Row -->
     <div class="cards-row">
       <div class="card card-active">
@@ -199,7 +189,7 @@
       <div class="chart-container">
         <h3>Services Report</h3>
         <div class="chart-placeholder">
-          Bar Chart Placeholder
+          None to Be Continue
         </div>
       </div>
 
