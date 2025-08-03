@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    'a1_fitness_function', # this will our feature to outside of our app
     'a1_classes_function',
     'a1_trainor_function',
     'a1_member_function',

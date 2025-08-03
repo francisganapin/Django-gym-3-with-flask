@@ -1,3 +1,7 @@
+8/3/2025
+	fix resgistration upload here http://127.0.0.1:8000/member-register/
+	added fitness Calculator
+
 6/17/2025
 	make the lastest login show,fix dashboard for mobile
 

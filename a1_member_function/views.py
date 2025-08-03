@@ -233,7 +233,7 @@ def member_register_view(request):
         complete_phone_number = phone_start + phone_number
 
 
-        profile_image_path = MemberClass.upload()
+        profile_image_path = MemberClass.upload(request)
         data = {
             'id_card':id_card,
             'expiry':expiry,
