@@ -8,7 +8,7 @@
     <div class="form-container">
         <h2>BMI Calculator Form</h2>
 
-        <form action="{% url 'bmi_calculator' %}" method="post">
+        <form action="{% url 'bmr_calculator' %}" method="post">
             {% csrf_token %}
             
             <div class="form-group">
@@ -21,12 +21,42 @@
                 <input type="number" step="any" id="weight_kg" name="weight_kg" value="{{ weight_kg }}">
             </div>
 
+            
+            <div class="form-group">
+                <label for="weight_kg">Age</label>
+                <input type="number" step="any" id="age" name="age" value="{{ age }}">
+            </div>
+
+
+            <div class="form-group">
+            <label for="weight_kg">Gender</label>
+            <select id="gender" name="gender" required>
+                <option value="">-- Select --</option>
+                <option value="male" {% if gender == 'male' %}selected{% endif %}>Male</option>
+                <option value="female" {% if gender == 'female' %}selected{% endif %}>Female</option>
+              </select><br>
+            </div>
+
+            <div class="form-group">
+            <label for="activity">Activity Level:</label>
+            <select id="activity" name="activity" required>
+              <option value="">-- Select --</option>
+              <option value="1.2" {% if activity == '1.2' %}selected{% endif %}>Sedentary</option>
+              <option value="1.375" {% if activity == '1.375' %}selected{% endif %}>Lightly Active</option>
+              <option value="1.55" {% if activity == '1.55' %}selected{% endif %}>Moderately Active</option>
+              <option value="1.725" {% if activity == '1.725' %}selected{% endif %}>Very Active</option>
+              <option value="1.9" {% if activity == '1.9' %}selected{% endif %}>Extra Active</option>
+            </select><br>
+            </div>
+
             <button type="submit" class="submit-btn">Submit</button>
         </form>
 
-        {% if bmi %}
-            <p><strong>Your BMI:</strong> {{ bmi }} {{category}} </p>
+        {% if bmr %}
+        <h3>Your BMR: {{ bmr|floatformat:2 }} kcal/day</h3>
+        <h4>Your TDEE (maintenance calories): {{ tdee|floatformat:2 }} kcal/day</h4>
         {% endif %}
+        
     </div>
 </div>
 
