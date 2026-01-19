@@ -5,12 +5,12 @@
 {% block content %}
 
 <style>
- 
     .container_div {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 90vh; /* Full screen height */
+        height: 90vh;
+        /* Full screen height */
         flex-direction: column;
     }
 
@@ -18,7 +18,7 @@
         background-color: #ffffff;
         padding: 20px 30px;
         border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
         text-align: center;
         width: 100%;
@@ -29,7 +29,7 @@
         background-color: #ffffff;
         padding: 30px;
         border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         width: 100%;
         max-width: 400px;
     }
@@ -64,29 +64,33 @@
     .login_form button:hover {
         background-color: #45a049;
     }
+
     img {
-    border-radius: 50%;
+        border-radius: 50%;
     }
 </style>
 
 <div class="container_div">
 
     {% if member or error %}
-        <div class="message_box" id="clearText">
-            {% if member %}
-                <h2>Member Details</h2>
-                
-                <img src="http://127.0.0.1:8000/media/{{ member.profile_image}}" alt="Avatar" style="width:200px">
+    <div class="message_box" id="clearText">
+        {% if member %}
+        <h2>Member Details</h2>
 
-            <div style="margin-top:20px;">
-                <p><strong>ID Card:</strong> {{ member.id_card }}</p>
+        <img src="http://127.0.0.1:8000/media/{{ member.profile_image}}" alt="Avatar" style="width:200px">
 
-                <p><strong>Name:</strong> {{ member.first_name }} {{ member.last_name }}</p>
-            </div>
-            {% elif error %}
-                <p>{{ error }}</p>
-            {% endif %}
+        <div style="margin-top:20px;">
+            <p><strong>ID Card:</strong> {{ member.id_card }}</p>
+
+            <p><strong>Name:</strong> {{ member.first_name }} {{ member.last_name }}</p>
+            <td class="{% if member.expiry < today %}red{% else %}green{% endif %}">
+                <strong>Expiry:</strong> {{ member.expiry }}
+            </td>
         </div>
+        {% elif error %}
+        <p>{{ error }}</p>
+        {% endif %}
+    </div>
     {% endif %}
 
     <div class="login_form">
@@ -101,7 +105,7 @@
 </div>
 
 <script>
-    function clearText(){
+    function clearText() {
         const box = document.getElementById('clearText');
         if (box) {
             box.remove();

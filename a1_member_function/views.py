@@ -16,7 +16,7 @@ import pymongo
 #List of function we use
 from global_function import GlobalFunction
 
-
+today = datetime.now()
 
 class MemberClass:
 
@@ -82,8 +82,8 @@ def member_list_view(request):
         posts = response.json() if isinstance(response.json(),list) else []
 
         #parse date logic we convert api date string to date object
-        #for post in posts:
-            #post['expiry'] = datetime.strptime(post['expiry'],"%Y-%m-%d")
+        for post in posts:
+            post['expiry'] = datetime.strptime(post['expiry'],"%Y-%m-%d")
 
         #exclude archive true so we can hide the member pass it to flask so it wont show if we search
         post_exclude = [archive for archive in posts if archive['archive'] != True ]
@@ -125,7 +125,8 @@ def member_list_view(request):
     context = {
         'member_list':page_obj,
         'login_date':login_date,
-        'random_id':random_id
+        'random_id':random_id,
+        'today': today
     }
     return render(request, 'member/member_list.html', context)
 
@@ -191,28 +192,30 @@ def member_list_view_update(request,member_id,first_name,last_name,expiry):
 
 def member_login_view_function(request):
     """this will be login  for our member"""
-
     login_date = MemberClass.today
     context = {}
+    today = datetime.now()
     if request.method == 'POST':
         id_card = request.POST.get('id_card')
-
-
         query = {"id_card": id_card }    
-       
-    try:
-        member_data = MemberClass.collection.find_one(query)
-        context = {'member':member_data,'login_date':login_date}
+        projection = {
+            'first_name':1,
+            'last_name':1,
+            'id_card':1,
+            'profile_image':1,
+            'expiry':1,
+            '_id':0
+        }
+        try:
+            member_data = MemberClass.collection.find_one(query,projection)
+            context = {'member':member_data,'login_date':login_date}
+            LoginClass.collection.insert_one(context)
+        except:
+            print('data was not updated')
+    return render (request,'member/member_login.html', context)
 
-        print(login_date)
-        print(context['member']['first_name'], context['member']['last_name'],context['member']['expiry'])
-        LoginClass.collection.insert_one(context)
 
-    except:
-         print('data was not updated')
     
-    return render (request,'member/member_login.html',context)
-
 def member_register_view(request):
     
     random_id = GlobalFunction.generate_random_id()
@@ -391,7 +394,6 @@ def update_member_list_expiry(request,member_id):
 
 def register_member_list_view(request):
     
- 
 
     if request.method == 'POST':
         id_card = request.POST.get('id_card')

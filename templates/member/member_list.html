@@ -6,192 +6,193 @@
 
 {% load static %}
 <style>
+  h1 {
+    text-align: center;
+    color: #333;
+  }
 
-h1 {
-  text-align: center;
-  color: #333;
-}
+  /* Table Styles */
+  #table-wrapper {
+    position: relative;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
 
-/* Table Styles */
-#table-wrapper {
-  position: relative;
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+  #table-scroll {
+    height: 600px;
+    overflow-y: auto;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
 
-#table-scroll {
-  height: 600px;
-  overflow-y: auto;
-  margin-top: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
+  #memberTable {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+  }
 
-#memberTable {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 8px;
-  overflow: hidden;
-}
+  th,
+  td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
 
-th, td {
-  padding: 12px;
-  border: 1px solid #ddd;
-  text-align: left;
-}
+  th {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
 
-th {
-  background: #007bff;
-  color: white;
-  font-weight: bold;
-  position: sticky;
-  top: 0;
-  z-index: 2;
-}
+  /* Alternating Row Colors */
+  tbody tr:nth-child(even) {
+    background: #f9f9f9;
+  }
 
-/* Alternating Row Colors */
-tbody tr:nth-child(even) {
-  background: #f9f9f9;
-}
+  tbody tr:hover {
+    background: #dfe6e9;
+  }
 
-tbody tr:hover {
-  background: #dfe6e9;
-}
+  /* Filters & Pagination */
+  .filters {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f1f1f1;
+    border-radius: 8px;
+  }
 
-/* Filters & Pagination */
-.filters {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  padding: 10px;
-  background: #f1f1f1;
-  border-radius: 8px;
-}
+  .filters input,
+  .filters select,
+  .filters button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
 
-.filters input,
-.filters select,
-.filters button {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
+  .pagination {
+    text-align: center;
+    margin: 20px 0;
+  }
 
-.pagination {
-  text-align: center;
-  margin: 20px 0;
-}
+  .pagination a {
+    padding: 8px 12px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 0 5px;
+  }
 
-.pagination a {
-  padding: 8px 12px;
-  background: #007bff;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  margin: 0 5px;
-}
+  .pagination a:hover {
+    background: #0056b3;
+  }
 
-.pagination a:hover {
-  background: #0056b3;
-}
+  /* Expiry Color Logic */
+  .expiry-date {
+    font-weight: bold;
+  }
 
-/* Expiry Color Logic */
-.expiry-date {
-  font-weight: bold;
-}
+  .expiry-date.red {
+    color: red;
+  }
 
-.expiry-date.red {
-  color: red;
-}
+  .expiry-date.green {
+    color: green;
+  }
 
-.expiry-date.green {
-  color: green;
-}
+  /* Buttons */
+  button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
-/* Buttons */
-button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  button.btn-primary {
+    background: #007bff;
+    color: white;
+  }
 
-button.btn-primary {
-  background: #007bff;
-  color: white;
-}
+  button.btn-primary:hover {
+    background: #0056b3;
+  }
 
-button.btn-primary:hover {
-  background: #0056b3;
-}
+  button.btn-secondary {
+    background: #6c757d;
+    color: white;
+  }
 
-button.btn-secondary {
-  background: #6c757d;
-  color: white;
-}
+  button.btn-secondary:hover {
+    background: #5a6268;
+  }
 
-button.btn-secondary:hover {
-  background: #5a6268;
-}
- .pagination_center{
-  display:center;
- }
+  .pagination_center {
+    display: center;
+  }
 
- .padding-left {
-  margin-left:100px;
-} 
-.padding-left-button {
-  padding-right:50px;
-}
+  .padding-left {
+    margin-left: 100px;
+  }
 
+  .padding-left-button {
+    padding-right: 50px;
+  }
 </style>
 <!-- card style-->
 <style>
   .card {
-      display: flex;
-      align-items: center;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      overflow: hidden;
-      max-width: 500px;
-      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-      background: #fff;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 500px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
   }
-  
+
   .card img {
-      width: 150px;
-      height: auto;
-      object-fit: cover;
+    width: 150px;
+    height: auto;
+    object-fit: cover;
   }
-  
+
   .card-body {
-      padding: 15px;
-      flex: 1;
+    padding: 15px;
+    flex: 1;
   }
-  
+
   .card-title {
-      font-size: 18px;
-      margin: 0 0 5px;
+    font-size: 18px;
+    margin: 0 0 5px;
   }
-  
+
   .card-text {
-      font-size: 14px;
-      color: #666;
+    font-size: 14px;
+    color: #666;
   }
-  
+
   .card-button {
-      display: inline-block;
-      background: #007bff;
-      color: white;
-      text-decoration: none;
-      padding: 8px 12px;
-      border-radius: 5px;
-      font-size: 14px;
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
   }
-  
+
   .card-button:hover {
-      background: #0056b3;
+    background: #0056b3;
   }
 </style>
 
@@ -208,21 +209,21 @@ button.btn-secondary:hover {
       <input type="text" name="query_name" value="{{ request.GET.query_name }}" placeholder="Name">
       <select name="gender">
         <option value="">All Genders</option>
-        <option value="Male" {% if request.GET.gender == "Male" %}selected{% endif %}>Male</option>
-        <option value="Female" {% if request.GET.gender == "Female" %}selected{% endif %}>Female</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
       </select>
       <button class="btn btn-primary" type="submit">🔎 Search</button>
     </form>
 
-<div class="padding-left-button">
-    <form method="get" action="{% url 'export_view' %}">
-      <button class="btn btn-primary" type="submit">⬇️ Export</button>
-    </form>
-  </div>
+    <div class="padding-left-button">
+      <form method="get" action="{% url 'export_view' %}">
+        <button class="btn btn-primary" type="submit">⬇️ Export</button>
+      </form>
+    </div>
 
-  <div class="padding-left-button">
-    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-Register">📝 Register</button>
-      
+    <div class="padding-left-button">
+      <button class="btn btn-primary" data-toggle="modal" data-target="#modal-Register">📝 Register</button>
+
 
       <div class="modal fade" id="modal-Register" tabindex="-1">
 
@@ -233,86 +234,95 @@ button.btn-secondary:hover {
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-              <form action="{% url 'register_member_list_view' %}" method="post" enctype="multipart/form-data" class="p-4 border rounded bg-light">
+              <form action="{% url 'register_member_list_view' %}" method="post" enctype="multipart/form-data"
+                class="p-4 border rounded bg-light">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="id_card">ID Card:</label>
-                    {{ message }}
-                    <input type="text" id="id_card" name="id_card" class="form-control" value="GIMIK-{{random_id}}-MEMBER" readonly required>
+                  <label for="id_card">ID Card:</label>
+                  {{ message }}
+                  <input type="text" id="id_card" name="id_card" class="form-control" value="GIMIK-{{random_id}}-MEMBER"
+                    readonly required>
                 </div>
                 <div class="form-group">
-                    <label for="expiry">Expiry:</label>
-                    <input type="date" id="expiry" name="expiry" class="form-control" required>
+                  <label for="expiry">Expiry:</label>
+                  <input type="date" id="expiry" name="expiry" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" id="first_name" name="first_name" class="form-control" required>
+                  <label for="first_name">First Name:</label>
+                  <input type="text" id="first_name" name="first_name" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" id="last_name" name="last_name" class="form-control" required>
+                  <label for="last_name">Last Name:</label>
+                  <input type="text" id="last_name" name="last_name" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="gender">Gender:</label>
-                    <select id="gender" name="gender" class="form-control" required>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
+                  <label for="gender">Gender:</label>
+                  <select id="gender" name="gender" class="form-control" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
                 </div>
                 <div class="form-group">
-                    <label for="address">Address:</label>
-                    <input type="text" id="address" name="address" class="form-control" required>
+                  <label for="address">Address:</label>
+                  <input type="text" id="address" name="address" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  
-              
+
+
                   <label>Phone Number:</label>
                   <div style="display: flex;">
-                      <input type="text" value="+63" disabled style="width:50px;" readonly>
-                      <input type="text" id="phone_number" name="phone_number" maxlength="10" required pattern="[0-9]+">
+                    <input type="text" value="+63" disabled style="width:50px;" readonly>
+                    <input type="text" id="phone_number" name="phone_number" maxlength="10" required pattern="[0-9]+">
                   </div>
-  
+
                 </div>
                 <div class="form-group">
-                    <label for="profile_image">Profile Image:</label>
-                    <input type="file" id="profile_image" name="profile_image" class="form-control-file" accept="image/*">
+                  <label for="profile_image">Profile Image:</label>
+                  <input type="file" id="profile_image" name="profile_image" class="form-control-file" accept="image/*">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
-            </form>
-            </div>
+              </form>
             </div>
           </div>
         </div>
+      </div>
+
+    </div>
+
+    <!-- Pagination -->
+    <div class="padding-left">
+      <div class="pagination_center">
+        <div class="pagination">
+          <span class="step-links">
+            {% if member_list.has_previous %}
+            <a href="?page=1&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">&laquo; First</a>
+            <a
+              href="?page={{ member_list.previous_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">⬅️
+              Previous</a>
+            {% endif %}
+
+            <span class="current">
+              Page {{ member_list.number }} of {{ member_list.paginator.num_pages }}.
+            </span>
+
+
+            {% if member_list.has_next %}
+            <a
+              href="?page={{ member_list.next_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Next
+              ➡️</a>
+            <a
+              href="?page={{ member_list.paginator.num_pages }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Last
+              &raquo;</a>
+            {% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
 
   </div>
 
-  <!-- Pagination -->
-  <div class="padding-left">
-  <div class="pagination_center">
-    <div class="pagination">
-      <span class="step-links">
-        {% if member_list.has_previous %}
-          <a href="?page=1&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">&laquo; First</a>
-          <a href="?page={{ member_list.previous_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">⬅️ Previous</a>
-        {% endif %}
-  
-        <span class="current">
-          Page {{ member_list.number }} of {{ member_list.paginator.num_pages }}.
-        </span>
-  
-        {% if member_list.has_next %}
-          <a href="?page={{ member_list.next_page_number }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Next ➡️</a>
-          <a href="?page={{ member_list.paginator.num_pages }}&id_card={{ request.GET.id_card }}&gender={{ request.GET.gender }}">Last &raquo;</a>
-        {% endif %}
-      </span>
-    </div>
-    </div>
 </div>
-
-  </div>
-  
-  </div>
 
 
 
@@ -342,59 +352,59 @@ button.btn-secondary:hover {
           <td>{{ item.id_card }}</td>
           <td>{{ item.first_name }}</td>
           <td>{{ item.last_name }}</td>
-          <td class="expiry-date {% if item.expiry|date:"Y-m-d" < today|date:"Y-m-d" %}red{% else %}green{% endif %}">
+          <td class="expiry-date {% if item.expiry < today %}red{% else %}green{% endif %}">
             <strong>{{ item.expiry }}</strong>
           </td>
           <td>{{ item.gender }}</td>
           <td>{{ item.join_date }}</td>
           <td>{{ item.phone_number }}</td>
-   
-          
 
 
- <!-- update expiry start-->
- <td>
-  <button class="btn btn-primary" data-toggle="modal" data-target="#modal-Update">📅 Update</button>
-
-  <!-- Update Expiry Modal -->
-  <div class="modal fade" id="modal-Update" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title">Confirm Expiry Update</h5>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-
-        <!-- Modal Body -->
-        <div class="modal-body text-center">
-          <p><strong>{{ item.first_name }} {{ item.last_name }}</strong></p>
-          <p>ID Card: <strong>{{ item.id_card }}</strong></p>
-          <p>Current Expiry: <strong>{{ item.expiry }}</strong></p>
-
-          <!-- Update Form -->
-          <form action="{% url 'update_member_list_expiry' item.id_card %}" method="post">
-            {% csrf_token %}
-            <label for="expiry" class="font-weight-bold">New Expiry Date:</label>
-            <input type="date" id="expiry" name="expiry" class="form-control">
-        </div>
-
-        <!-- Modal Footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-danger">Update</button>
-        </div>
-        </form>
-        
-      </div>
-    </div>
-  </div>
-</td>
-<!-- update expiry end-->
 
 
-<!---Archive a Member-->
+          <!-- update expiry start-->
+          <td>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modal-Update">📅 Update</button>
+
+            <!-- Update Expiry Modal -->
+            <div class="modal fade" id="modal-Update" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Confirm Expiry Update</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <!-- Modal Body -->
+                  <div class="modal-body text-center">
+                    <p><strong>{{ item.first_name }} {{ item.last_name }}</strong></p>
+                    <p>ID Card: <strong>{{ item.id_card }}</strong></p>
+                    <p>Current Expiry: <strong>{{ item.expiry }}</strong></p>
+
+                    <!-- Update Form -->
+                    <form action="{% url 'update_member_list_expiry' item.id_card %}" method="post">
+                      {% csrf_token %}
+                      <label for="expiry" class="font-weight-bold">New Expiry Date:</label>
+                      <input type="date" id="expiry" name="expiry" class="form-control">
+                  </div>
+
+                  <!-- Modal Footer -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Update</button>
+                  </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </td>
+          <!-- update expiry end-->
+
+
+          <!---Archive a Member-->
           <td>
             <button class="btn btn-primary" data-toggle="modal" data-target="#modal-Archive">🗄️ Archive</button>
             <div class="modal fade" id="modal-Archive" tabindex="-1">
@@ -420,49 +430,50 @@ button.btn-secondary:hover {
             </div>
           </td>
 
-<!-- Making ID-->
+          <!-- Making ID-->
 
-            <!-- Making ID-->
-            <td>
-              <button class="btn btn-primary" data-toggle="modal" data-target="#modal-getID">🆔 Get ID</button>
-            
-              <!-- Get ID Modal -->
-              <div class="modal fade" id="modal-getID" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-            
-                    <!-- Modal Header -->
-                    <div class="modal-header bg-primary text-white">
-                      <h5 class="modal-title">Member ID Details</h5>
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-            
-                    <!-- Modal Body -->
-                    <div class="modal-body text-center">
-                      <div id="print_id">
-                        <div class="card shadow-sm border-0">
-                          <div class="card-body text-center">
-                            <img src="/media/image/image.png" alt="Profile Image" class="img-fluid rounded mb-3" style="max-width: 150px;">
-                            <h2 class="card-title font-weight-bold">{{ item.id_card }}</h2>
-                            <p class="card-text mb-1">{{ item.first_name }} {{ item.last_name }}</p>
-                            <p class="text-muted">{{ item.address }}</p>
-                          </div>
+          <!-- Making ID-->
+          <td>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modal-getID">🆔 Get ID</button>
+
+            <!-- Get ID Modal -->
+            <div class="modal fade" id="modal-getID" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Member ID Details</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <!-- Modal Body -->
+                  <div class="modal-body text-center">
+                    <div id="print_id">
+                      <div class="card shadow-sm border-0">
+                        <div class="card-body text-center">
+                          <img src="/media/image/image.png" alt="Profile Image" class="img-fluid rounded mb-3"
+                            style="max-width: 150px;">
+                          <h2 class="card-title font-weight-bold">{{ item.id_card }}</h2>
+                          <p class="card-text mb-1">{{ item.first_name }} {{ item.last_name }}</p>
+                          <p class="text-muted">{{ item.address }}</p>
                         </div>
                       </div>
                     </div>
-            
-                    <!-- Modal Footer -->
-                    <div class="modal-footer">
-                      <button onclick="printDiv()" class="btn btn-danger">🖨 Print</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-            
                   </div>
+
+                  <!-- Modal Footer -->
+                  <div class="modal-footer">
+                    <button onclick="printDiv()" class="btn btn-danger">🖨 Print</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+
                 </div>
               </div>
-            </td>
-     
-          
+            </div>
+          </td>
+
+
         </tr>
         {% endfor %}
       </tbody>
@@ -482,30 +493,30 @@ button.btn-secondary:hover {
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-      var today = new Date();
-      var expiryElements = document.querySelectorAll('.expiry-date span');
-  
-      expiryElements.forEach(function(expiryElement) {
-          var expiryDate = new Date(expiryElement.innerText.trim());
-          if (expiryDate < today) {
-              expiryElement.style.color = 'red';
-          } else {
-              expiryElement.style.color = 'green';
-          }
-      });
+  document.addEventListener('DOMContentLoaded', function () {
+    var today = new Date();
+    var expiryElements = document.querySelectorAll('.expiry-date span');
+
+    expiryElements.forEach(function (expiryElement) {
+      var expiryDate = new Date(expiryElement.innerText.trim());
+      if (expiryDate < today) {
+        expiryElement.style.color = 'red';
+      } else {
+        expiryElement.style.color = 'green';
+      }
+    });
   });
-  </script>
+</script>
 
 <script>
   function printDiv() {
-      let modal = document.getElementById("modal-getID"); // Get modal element
-      let printContent = document.getElementById("print_id").innerHTML; // Get the card inside modal
+    let modal = document.getElementById("modal-getID"); // Get modal element
+    let printContent = document.getElementById("print_id").innerHTML; // Get the card inside modal
 
-      // Open a new print window
-      let printWindow = window.open('', '', 'height=500, width=500');
-      printWindow.document.open();
-      printWindow.document.write(`
+    // Open a new print window
+    let printWindow = window.open('', '', 'height=500, width=500');
+    printWindow.document.open();
+    printWindow.document.write(`
           <html>
           <head>
               <title>Print ID</title>
@@ -522,22 +533,17 @@ button.btn-secondary:hover {
           </body>
           </html>
       `);
-      printWindow.document.close();
+    printWindow.document.close();
 
-      // Wait for the print window to fully load, then print and close
-      printWindow.onload = function () {
-          printWindow.print();
-          printWindow.close();
-      };
+    // Wait for the print window to fully load, then print and close
+    printWindow.onload = function () {
+      printWindow.print();
+      printWindow.close();
+    };
   }
 </script>
 
 <!-- we use this script for our qr--> <!--- fox this later on please-->
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
-  
-    {% endblock %}
 
-
-
-
-
+{% endblock %}

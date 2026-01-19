@@ -1,3 +1,7 @@
+1/20/2026
+	fix  login function to mongo db
+	next update we need to print red color for our expired member
+
 8/3/2025
 	fix resgistration upload here http://127.0.0.1:8000/member-register/
 	added fitness Calculator
